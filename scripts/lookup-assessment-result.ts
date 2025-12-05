@@ -3,7 +3,7 @@ import * as p from "@clack/prompts"
 import { and, eq, ilike, or } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas/nice"
-import { oneroster } from "@/lib/clients"
+import { caliper, oneroster } from "@/lib/clients"
 import { type AssessmentResult } from "@/lib/oneroster"
 import * as logger from "@superbuilders/slog"
 import * as errors from "@superbuilders/errors"
@@ -118,71 +118,57 @@ async function fetchAssessmentResults(
 	contentType: ContentType
 ): Promise<AssessmentResult[]> {
 	const lineItemId = `nice_${contentId}_ali`
+	// Base prefix matches: nice_{userId}_nice_{contentId}_ali (and any suffix like _attempt_1)
+	const basePrefix = `nice_${userSourcedId}_${lineItemId}`
 
-	const isInteractive = isInteractiveContentType(contentType)
-
-	if (isInteractive) {
-		const basePrefix = `nice_${userSourcedId}_${lineItemId}_attempt_`
-
-		const allResultsResponse = await errors.try(
-			oneroster.getAllResults({
-				filter: `sourcedId~'${basePrefix}'`
-			})
-		)
-		if (allResultsResponse.error) {
-			logger.error("failed to fetch interactive assessment results", { error: allResultsResponse.error })
-			throw errors.wrap(allResultsResponse.error, "fetch interactive assessment results")
-		}
-
-		const allResults = allResultsResponse.data
-		const filtered = allResults.filter((r: AssessmentResult) => r.sourcedId.startsWith(basePrefix))
-
-		if (filtered.length > 0) {
-			const allHaveAttemptNumbers = filtered.every((r) => typeof getAttemptNumber(r) === "number")
-			if (allHaveAttemptNumbers) {
-				return filtered.sort((a, b) => (getAttemptNumber(a)! - getAttemptNumber(b)!))
-			}
-			const allHaveDates = filtered.every((r) => typeof r.scoreDate === "string" && r.scoreDate.length > 0)
-			if (allHaveDates) {
-				return filtered.sort(
-					(a, b) => new Date(a.scoreDate!).getTime() - new Date(b.scoreDate!).getTime()
-				)
-			}
-			logger.error("cannot determine attempt ordering", { hasAttemptNumbers: allHaveAttemptNumbers, hasScoreDates: allHaveDates })
-			throw errors.new("attempt ordering unavailable")
-		}
-
-		// Fallback for older interactive records that used a single result without attempt suffix
-		const passiveResultId = `nice_${userSourcedId}_${lineItemId}`
-		logger.info("no attempt results found for interactive content; checking single result", {
-			userSourcedId,
-			lineItemId
+	// Search for ALL results matching this user/content combination
+	// This catches: _ali, _ali_attempt_1, _ali_attempt_2, etc.
+	const allResultsResponse = await errors.try(
+		oneroster.getAllResults({
+			filter: `sourcedId~'${basePrefix}'`
 		})
-		const singleResultResponse = await errors.try(oneroster.getResult(passiveResultId))
-		if (singleResultResponse.error) {
-			logger.error("failed to fetch single interactive result", { error: singleResultResponse.error })
-			throw errors.wrap(singleResultResponse.error, "fetch interactive single result")
-		}
-		const single = singleResultResponse.data
-		if (!single) {
-			return []
-		}
-		return [single]
+	)
+	if (allResultsResponse.error) {
+		logger.error("failed to fetch assessment results", { error: allResultsResponse.error })
+		throw errors.wrap(allResultsResponse.error, "fetch assessment results")
 	}
 
-	const passiveResultId = `nice_${userSourcedId}_${lineItemId}`
-	const resultResponse = await errors.try(oneroster.getResult(passiveResultId))
-	if (resultResponse.error) {
-		logger.error("failed to fetch passive content result", { error: resultResponse.error })
-		throw errors.wrap(resultResponse.error, "fetch passive content result")
-	}
+	const allResults = allResultsResponse.data
+	const filtered = allResults.filter((r: AssessmentResult) => r.sourcedId.startsWith(basePrefix))
 
-	const result = resultResponse.data
-	if (!result) {
+	if (filtered.length === 0) {
 		return []
 	}
 
-	return [result]
+	// Check if these are attempt-based results
+	const attemptResults = filtered.filter((r) => r.sourcedId.includes("_attempt_"))
+	
+	if (attemptResults.length > 0) {
+		// Sort attempt results by attempt number or date
+		const allHaveAttemptNumbers = attemptResults.every((r) => typeof getAttemptNumber(r) === "number")
+		if (allHaveAttemptNumbers) {
+			return attemptResults.sort((a, b) => (getAttemptNumber(a)! - getAttemptNumber(b)!))
+		}
+		const allHaveDates = attemptResults.every((r) => typeof r.scoreDate === "string" && r.scoreDate.length > 0)
+		if (allHaveDates) {
+			return attemptResults.sort(
+				(a, b) => new Date(a.scoreDate!).getTime() - new Date(b.scoreDate!).getTime()
+			)
+		}
+		logger.error("cannot determine attempt ordering", { hasAttemptNumbers: allHaveAttemptNumbers, hasScoreDates: allHaveDates })
+		throw errors.new("attempt ordering unavailable")
+	}
+
+	// Return non-attempt results (single completion records)
+	// Sort by date if multiple exist
+	const allHaveDates = filtered.every((r) => typeof r.scoreDate === "string" && r.scoreDate.length > 0)
+	if (allHaveDates && filtered.length > 1) {
+		return filtered.sort(
+			(a, b) => new Date(a.scoreDate!).getTime() - new Date(b.scoreDate!).getTime()
+		)
+	}
+
+	return filtered
 }
 
 function formatResult(result: AssessmentResult, attemptNumber?: number): string {
@@ -200,6 +186,54 @@ Status: ${result.scoreStatus}
 Date: ${scoreDate}
 Comment: ${result.comment || "none"}
 Metadata: ${metadata}`
+}
+
+async function fetchCaliperEventsForContent(
+	userSourcedId: string,
+	contentId: string
+): Promise<unknown[]> {
+	const actorId = `urn:uuid:${userSourcedId}`
+	const resourceId = `nice_${contentId}`
+
+	logger.info("fetching caliper events", { actorId, resourceId })
+
+	const eventsResult = await errors.try(caliper.getEvents(actorId))
+	if (eventsResult.error) {
+		logger.error("failed to fetch caliper events", { error: eventsResult.error })
+		throw errors.wrap(eventsResult.error, "fetch caliper events")
+	}
+
+	const allEvents = eventsResult.data
+
+	// Filter events that match the content/resource ID
+	const filtered = allEvents.filter((event) => {
+		const objectId = event.object?.id
+		if (typeof objectId !== "string") return false
+		// Match events where object.id contains the resource ID
+		return objectId.includes(resourceId)
+	})
+
+	logger.info("filtered caliper events", { total: allEvents.length, matched: filtered.length })
+	return filtered
+}
+
+function formatCaliperEvent(event: unknown, index: number): string {
+	const e = event as Record<string, unknown>
+	const eventTime = e.eventTime ? new Date(e.eventTime as string).toLocaleString() : "N/A"
+	const action = e.action ?? "N/A"
+	const objectId = (e.object as Record<string, unknown> | undefined)?.id ?? "N/A"
+	const objectType = (e.object as Record<string, unknown> | undefined)?.type ?? "N/A"
+
+	// Extract extensions if present
+	const extensions = e.extensions ? JSON.stringify(e.extensions, null, 2) : "none"
+
+	return `
+=== Event ${index + 1} ===
+Action: ${action}
+Time: ${eventTime}
+Object ID: ${objectId}
+Object Type: ${objectType}
+Extensions: ${extensions}`
 }
 
 async function main() {
@@ -449,6 +483,43 @@ Path: ${selectedContent.path}`, "selected content")
 			throw errors.new("expected at least one result")
 		}
 		p.note(formatResult(firstResult), "assessment result")
+	}
+
+	// Offer to fetch caliper events
+	const shouldFetchCaliper = await p.confirm({
+		message: "do you want to fetch caliper events for this content?",
+		initialValue: false
+	})
+
+	if (p.isCancel(shouldFetchCaliper)) {
+		p.cancel("operation cancelled")
+		process.exit(0)
+	}
+
+	if (shouldFetchCaliper) {
+		const caliperSpinner = p.spinner()
+		caliperSpinner.start("fetching caliper events...")
+
+		const caliperResult = await errors.try(
+			fetchCaliperEventsForContent(userSourcedId, selectedContent.id)
+		)
+		if (caliperResult.error) {
+			caliperSpinner.stop("caliper fetch failed")
+			logger.error("caliper events fetch failed", { error: caliperResult.error })
+			p.note("failed to fetch caliper events", "error")
+		} else {
+			const caliperEvents = caliperResult.data
+			caliperSpinner.stop(`found ${caliperEvents.length} caliper event(s)`)
+
+			if (caliperEvents.length === 0) {
+				p.note("no caliper events found for this user/content combination", "no caliper events")
+			} else {
+				p.note(
+					caliperEvents.map((e, i) => formatCaliperEvent(e, i)).join("\n"),
+					"caliper events"
+				)
+			}
+		}
 	}
 
 	const shouldUpdate = await p.confirm({
