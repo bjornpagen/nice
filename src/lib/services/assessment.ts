@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { env } from "@/env"
@@ -129,9 +128,6 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 			logger.error("caliper subject mapping missing", { subjectSlug, correlationId })
 			// Skip analytics if subject mapping is missing
 		} else {
-			// Generate a unique event ID for this XP award to ensure Caliper events are unique per completion
-			const caliperEventId = `urn:uuid:${randomUUID()}`
-
 			// Build Caliper actor (legacy shape)
 			const actor = {
 				id: constructActorId(userId),
@@ -139,9 +135,9 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 				email: command.userEmail
 			}
 
-			// Build Caliper context with unique ID per event
+			// Build Caliper context to match legacy payloads used by progress analytics
 			const context = {
-				id: caliperEventId,
+				id: `${env.NEXT_PUBLIC_APP_DOMAIN}${command.assessmentPath}`,
 				type: "TimebackActivityContext" as const,
 				subject: mappedSubject,
 				app: { name: "Nice Academy" },

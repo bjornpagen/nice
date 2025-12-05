@@ -397,10 +397,8 @@ export async function awardBankedXpForExercise(params: {
 					type: "TimebackUser" as const,
 					email: params.userEmail
 				}
-				// Generate a unique event ID for this banked XP Caliper event
-				const caliperEventId = `urn:uuid:${randomUUID()}`
 				const context = {
-					id: caliperEventId,
+					id: `${env.NEXT_PUBLIC_APP_DOMAIN}/resources/${resource.sourcedId}`,
 					type: "TimebackActivityContext" as const,
 					subject: mappedSubject,
 					app: { name: "Nice Academy" },

@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { CALIPER_SUBJECT_MAPPING, isSubjectSlug } from "@/lib/constants/subjects"
@@ -20,16 +19,13 @@ export async function buildCaliperPayloadForContentWithEmail(
     const normalizedResourceId = extractResourceIdFromCompoundId(onerosterResourceSourcedId)
     const activityId = normalizeCaliperId(normalizedResourceId)
 
-    // Generate a unique event ID for this Caliper event to ensure uniqueness per time spent report
-    const caliperEventId = `urn:uuid:${randomUUID()}`
-
     const actor = {
         id: constructActorId(onerosterUserSourcedId),
         type: "TimebackUser" as const,
         email: userEmail
     }
     const context = {
-        id: caliperEventId,
+        id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}/${courseInfo.subjectSlug}/${courseInfo.courseSlug}`,
         type: "TimebackActivityContext" as const,
         subject: CALIPER_SUBJECT_MAPPING[courseInfo.subjectSlug],
         app: { name: "Nice Academy" },
