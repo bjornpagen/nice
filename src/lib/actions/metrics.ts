@@ -16,6 +16,7 @@ export type CourseEnrollmentUser = {
   schoolNames: string[]
   earnedXP: number
   percentComplete: number
+  isUnenrolled: boolean
 }
 
 export type CourseEnrollmentData = {
@@ -57,6 +58,7 @@ export async function getCourseEnrollments(courseId: string): Promise<CourseEnro
   }
 
   // Fetch enrollments per class (more targeted than scanning all enrollments)
+  // Fetch ALL enrollments (not just active) to track unenrolled status
   const CLASS_CONCURRENCY = Math.min(24, Math.max(4, relevantClassIds.size))
   const relevantClassIdList = Array.from(relevantClassIds)
   const classEnrollments = new Map<string, Array<Awaited<ReturnType<typeof oneroster.getAllEnrollments>>[number]>>()
@@ -67,8 +69,9 @@ export async function getCourseEnrollments(courseId: string): Promise<CourseEnro
       if (i >= relevantClassIdList.length) return
       const classId = relevantClassIdList[i]
       if (!classId) continue
+      // Fetch all enrollments for the class (not just active) to detect unenrolled students
       const res = await errors.try(
-        oneroster.getAllEnrollments({ filter: `class.sourcedId='${classId}' AND status='active'` })
+        oneroster.getAllEnrollments({ filter: `class.sourcedId='${classId}'` })
       )
       if (res.error) {
         logger.warn("metrics enrollments: failed to fetch enrollments for class", { classId, error: res.error })
@@ -81,6 +84,8 @@ export async function getCourseEnrollments(courseId: string): Promise<CourseEnro
 
   const userIdToEnrollmentRoles = new Map<string, Set<string>>()
   const userIdToSchoolIdsFromClasses = new Map<string, Set<string>>()
+  // Track enrollment status per user (active vs deleted)
+  const userIdToEnrollmentStatus = new Map<string, { hasActive: boolean; hasDeleted: boolean }>()
   for (const [clsId, list] of classEnrollments) {
     for (const e of list) {
       if (!relevantClassIds.has(clsId)) continue
@@ -93,6 +98,15 @@ export async function getCourseEnrollments(courseId: string): Promise<CourseEnro
       const schoolId = classIdToSchoolId.get(clsId)
       if (schoolId) sset.add(schoolId)
       userIdToSchoolIdsFromClasses.set(e.user.sourcedId, sset)
+
+      // Track enrollment status per user
+      const statusInfo = userIdToEnrollmentStatus.get(e.user.sourcedId) || { hasActive: false, hasDeleted: false }
+      if (e.status === "active") {
+        statusInfo.hasActive = true
+      } else if (e.status === "deleted" || e.status === "tobedeleted") {
+        statusInfo.hasDeleted = true
+      }
+      userIdToEnrollmentStatus.set(e.user.sourcedId, statusInfo)
     }
   }
 
@@ -302,6 +316,13 @@ export async function getCourseEnrollments(courseId: string): Promise<CourseEnro
     const schoolNames = Array.from(new Set([...(roleOrgNames || []), ...(classSchoolNames || [])]))
     const earnedXP = Math.max(0, xpResults.get(userId) ?? 0)
     const percentComplete = totalCourseXP > 0 ? Math.min(100, Math.round((earnedXP / totalCourseXP) * 100)) : 0
+    
+    // Determine if user is unenrolled (has deleted enrollment with no active enrollment)
+    const enrollmentStatus = userIdToEnrollmentStatus.get(userId)
+    const isUnenrolled = enrollmentStatus 
+      ? (enrollmentStatus.hasDeleted && !enrollmentStatus.hasActive)
+      : false
+    
     users.push({
       userId,
       email: detail.email,
@@ -311,7 +332,8 @@ export async function getCourseEnrollments(courseId: string): Promise<CourseEnro
       isStudentOnly,
       schoolNames,
       earnedXP,
-      percentComplete
+      percentComplete,
+      isUnenrolled
     })
   }
 

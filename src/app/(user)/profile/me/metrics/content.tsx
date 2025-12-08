@@ -263,38 +263,52 @@ export function Content({ metricsPromise, strugglingPromise }: Props) {
                 </div>
               </div>
               <div className="max-h-[70vh] overflow-auto">
-                <Table className="table-fixed">
+                <Table className="min-w-[800px]">
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-48 sticky top-0 bg-white z-10">Name</TableHead>
-                      <TableHead className="w-64 sticky top-0 bg-white z-10">Email</TableHead>
-                      <TableHead className="w-64 sticky top-0 bg-white z-10">School(s)</TableHead>
-                      <TableHead className="w-28 sticky top-0 bg-white z-10">XP</TableHead>
-                      <TableHead className="w-28 sticky top-0 bg-white z-10">Percent</TableHead>
+                      <TableHead className="w-40 sticky top-0 bg-white z-10">Name</TableHead>
+                      <TableHead className="w-56 sticky top-0 bg-white z-10">Email</TableHead>
+                      <TableHead className="w-48 sticky top-0 bg-white z-10">School(s)</TableHead>
+                      <TableHead className="w-24 sticky top-0 bg-white z-10">XP</TableHead>
+                      <TableHead className="w-20 sticky top-0 bg-white z-10">Progress</TableHead>
+                      <TableHead className="w-24 sticky top-0 bg-white z-10">Status</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {[...data.users]
                       .sort((a, b) => {
+                        // Sort unenrolled to bottom
+                        if (a.isUnenrolled !== b.isUnenrolled) return a.isUnenrolled ? 1 : -1
                         if (b.earnedXP !== a.earnedXP) return b.earnedXP - a.earnedXP
                         return b.percentComplete - a.percentComplete
                       })
                       .map((u, i) => (
-                        <TableRow key={u.userId} className={i % 2 === 1 ? "bg-gray-50" : undefined}>
+                        <TableRow key={u.userId} className={u.isUnenrolled ? "bg-red-50/30" : i % 2 === 1 ? "bg-gray-50" : undefined}>
                           <TableCell className="whitespace-normal break-words text-xs font-semibold">{u.displayName || "—"}</TableCell>
                           <TableCell className="whitespace-normal break-words text-xs">
                             {u.email ? (
-                              <Badge className="rounded-full bg-slate-100 text-slate-700 border border-slate-200 px-2 py-0.5 font-normal">{u.email}</Badge>
+                              <Badge className="rounded-full bg-slate-100 text-slate-700 border border-slate-200 px-2 py-0.5 font-normal text-[11px]">{u.email}</Badge>
                             ) : (
                               "—"
                             )}
                           </TableCell>
                           <TableCell className="whitespace-normal break-words text-xs">{u.schoolNames.length > 0 ? u.schoolNames.join(", ") : "—"}</TableCell>
                           <TableCell className="text-xs">
-                            <Badge className="bg-yellow-100 text-yellow-900 border border-yellow-200">✨ {u.earnedXP} XP</Badge>
+                            <Badge className="bg-yellow-100 text-yellow-900 border border-yellow-200">✨ {u.earnedXP}</Badge>
                           </TableCell>
                           <TableCell className="text-xs">
                             <Badge className="bg-blue-100 text-blue-900 border border-blue-200">{u.percentComplete}%</Badge>
+                          </TableCell>
+                          <TableCell className="text-xs">
+                            {u.isUnenrolled ? (
+                              <Badge variant="outline" className="text-red-600 border-red-200 bg-red-50 text-[10px] px-1.5 py-0">
+                                Unenrolled
+                              </Badge>
+                            ) : (
+                              <Badge variant="outline" className="text-green-600 border-green-200 bg-green-50 text-[10px] px-1.5 py-0">
+                                Active
+                              </Badge>
+                            )}
                           </TableCell>
                         </TableRow>
                       ))}

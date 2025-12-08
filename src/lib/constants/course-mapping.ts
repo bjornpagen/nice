@@ -16,6 +16,7 @@ export const HARDCODED_COURSE_MAPPING = {
 	x87d03b443efbea0a: ["7"], // middle-school-earth-and-space-science
 	x230b3ff252126bb6: ["9"], // hs-bio
 	xc370bc422b7f75fc: ["6"], // ms-chemistry
+	x27ad39d4b4427987: ["6", "7", "8"], // ms-science-supplementary
 	xf557a762645cccc5: ["11", "12"], // AP College Physics 1
 	x0e2f5a2c: ["11", "12"], // AP College Physics 2
 	x2613d8165d88df5e: ["10"], // High School Chemistry
@@ -224,6 +225,7 @@ export const HARDCODED_SCIENCE_COURSE_IDS = [
 	"x87d03b443efbea0a", // middle-school-earth-and-space-science
 	"x230b3ff252126bb6", // hs-bio
 	"xc370bc422b7f75fc", // ms-chemistry
+	"x27ad39d4b4427987", // ms-science-supplementary
 	// "xf557a762645cccc5", // AP College Physics 1
 	// "x0e2f5a2c", // AP College Physics 2
 	// "x2613d8165d88df5e", // High School Chemistry

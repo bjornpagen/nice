@@ -273,9 +273,10 @@ export async function getAllCourseMetrics(range: MetricsDateRange): Promise<Cour
 	}
 	await Promise.all(Array.from({ length: CLASS_CONCURRENCY }, () => classWorker()))
 
-    // Step 3: Fetch active student enrollments PER RELEVANT CLASS to avoid scanning the entire system
+    // Step 3: Fetch ALL student enrollments (active + deleted) PER RELEVANT CLASS
+    // This matches getCourseEnrollments which also includes unenrolled students
     const relevantClassIds = Array.from(classToCourse.keys())
-    const enrollIndex = new Map<string, Set<string>>()
+    const rawEnrollIndex = new Map<string, Set<string>>()
     if (relevantClassIds.length > 0) {
         const CONCURRENCY = Math.min(24, Math.max(4, relevantClassIds.length))
         let idx = 0
@@ -285,9 +286,9 @@ export async function getAllCourseMetrics(range: MetricsDateRange): Promise<Cour
                 if (i >= relevantClassIds.length) return
                 const classId = relevantClassIds[i]
                 if (!classId) continue
-                // Filter at API level by class id and active status
+                // Fetch ALL enrollments (not just active) to match modal behavior
                 const result = await errors.try(
-                    oneroster.getAllEnrollments({ filter: `class.sourcedId='${classId}' AND status='active'` })
+                    oneroster.getAllEnrollments({ filter: `class.sourcedId='${classId}'` })
                 )
                 if (result.error) {
                     logger.warn("metrics: failed to fetch enrollments for class", { classId, error: result.error })
@@ -297,16 +298,85 @@ export async function getAllCourseMetrics(range: MetricsDateRange): Promise<Cour
                     if (e.role !== "student") continue
                     const courseId = classToCourse.get(classId)
                     if (!courseId) continue
-                    let set = enrollIndex.get(courseId)
+                    let set = rawEnrollIndex.get(courseId)
                     if (!set) {
                         set = new Set<string>()
-                        enrollIndex.set(courseId, set)
+                        rawEnrollIndex.set(courseId, set)
                     }
                     set.add(e.user.sourcedId)
                 }
             }
         }
         await Promise.all(Array.from({ length: CONCURRENCY }, () => worker()))
+    }
+
+    // Step 3b: Filter to only "real" students (same logic as getCourseEnrollments)
+    // Fetch global roles for all unique user IDs and filter out test accounts
+    const allUserIds = new Set<string>()
+    for (const userSet of rawEnrollIndex.values()) {
+        for (const userId of userSet) {
+            allUserIds.add(userId)
+        }
+    }
+    const uniqueUserIds = Array.from(allUserIds)
+    logger.debug("metrics: fetching user details for filtering", { userCount: uniqueUserIds.length })
+
+    const userDetails = new Map<string, { email?: string; roles: string[] }>()
+    const USER_CONCURRENCY = Math.min(24, Math.max(4, uniqueUserIds.length))
+    let userIdx = 0
+    async function userWorker() {
+        while (true) {
+            const i = userIdx++
+            if (i >= uniqueUserIds.length) return
+            const userId = uniqueUserIds[i]
+            if (!userId) continue
+            const usersResult = await errors.try(
+                oneroster.getAllUsers({ filter: `sourcedId='${userId}'` })
+            )
+            if (usersResult.error) {
+                logger.warn("metrics: failed to fetch user", { userId, error: usersResult.error })
+                continue
+            }
+            const user = usersResult.data[0]
+            if (!user) continue
+            const roles = Array.isArray(user.roles) ? user.roles.map((r) => r.role) : []
+            userDetails.set(userId, { email: user.email ?? undefined, roles })
+        }
+    }
+    await Promise.all(Array.from({ length: Math.min(USER_CONCURRENCY, uniqueUserIds.length) }, () => userWorker()))
+
+    // Filter to student-only users (excluding test accounts)
+    const SPECIAL_STUDENT_EMAIL = "ameer.alnseirat@superbuilders.school"
+    const studentOnlyUserIds = new Set(uniqueUserIds.filter((uid) => {
+        const detail = userDetails.get(uid)
+        if (!detail) return false
+
+        // Special case: always include this specific user
+        if (detail.email && detail.email.toLowerCase() === SPECIAL_STUDENT_EMAIL.toLowerCase()) {
+            return true
+        }
+
+        if (detail.roles.length === 0) return false
+        const isStudent = detail.roles.every((r) => r === "student")
+        if (!isStudent) return false
+        const emailLower = (detail.email || "").toLowerCase()
+        if (emailLower.endsWith("@superbuilders.school") || emailLower.endsWith("@gmail.com")) return false
+        return true
+    }))
+    logger.debug("metrics: filtered to student-only users", { before: uniqueUserIds.length, after: studentOnlyUserIds.size })
+
+    // Build filtered enrollment index
+    const enrollIndex = new Map<string, Set<string>>()
+    for (const [courseId, userSet] of rawEnrollIndex) {
+        const filteredSet = new Set<string>()
+        for (const userId of userSet) {
+            if (studentOnlyUserIds.has(userId)) {
+                filteredSet.add(userId)
+            }
+        }
+        if (filteredSet.size > 0) {
+            enrollIndex.set(courseId, filteredSet)
+        }
     }
 
     // Step 4: Build minimal metrics objects without per-user details
