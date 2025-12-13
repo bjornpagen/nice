@@ -61,7 +61,7 @@ export function LockOverlay({ message }: { message?: string }) {
 					</div>
 					<h3 className="text-lg font-semibold text-gray-900">Content locked</h3>
 					<p className="text-sm text-gray-600 mt-1">
-						{message ?? "This content is locked until you complete the earlier activities."}
+						{message ?? "This content is locked until you master the earlier activities."}
 					</p>
 					<div className="mt-4 flex justify-center">
 						<Button asChild className="bg-blue-600 hover:bg-blue-700 text-white">

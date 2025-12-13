@@ -133,7 +133,7 @@ export function LessonLayout({
 						{/* Lock overlay at layout level to cover content + footer, not the in-content header */}
 						{isLocked && isArticleOrVideo && (
 							<div className="absolute top-[4rem] bottom-0 left-0 right-0 z-[999]">
-								<LockOverlay message="This content is locked until you complete the earlier activities." />
+								<LockOverlay message="This content is locked until you master the earlier activities." />
 							</div>
 						)}
 					</div>
