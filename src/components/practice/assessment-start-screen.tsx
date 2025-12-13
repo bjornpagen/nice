@@ -121,7 +121,7 @@ export function AssessmentStartScreen({
 
 			{isLocked && (
 				<div className="absolute top-[6rem] bottom-0 left-0 right-0 z-30">
-					<LockOverlay message="This content is locked. Please complete earlier activities in the unit." />
+					<LockOverlay message="This content is locked. Please master earlier activities in the unit." />
 				</div>
 			)}
 		</div>
