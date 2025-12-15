@@ -1,8 +1,10 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { env } from "@/env"
+import { XP_REASON_ALREADY_PROFICIENT } from "@/lib/constants/progress"
 import { CALIPER_SUBJECT_MAPPING } from "@/lib/constants/subjects"
 import type { SaveAssessmentResultCommand } from "@/lib/dtos/assessment"
+import { determineRequiresRetry } from "@/lib/mastery/core"
 import * as analytics from "@/lib/ports/analytics"
 import * as gradebook from "@/lib/ports/gradebook"
 import * as cache from "@/lib/services/cache"
@@ -75,6 +77,10 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 		command.durationInSeconds
 	).finalXp
 
+	// Determine if retry is required using pure function
+	const wasAlreadyProficient = xpResult.reason === XP_REASON_ALREADY_PROFICIENT
+	const requiresRetry = determineRequiresRetry(accuracyPercent, totalQuestions, wasAlreadyProficient)
+
 	const metadata = {
 		masteredUnits,
 		totalQuestions: totalQuestions,
@@ -89,7 +95,8 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 		attempt: attemptNumber,
 		durationInSeconds: command.durationInSeconds,
 		lessonType: command.contentType?.toLowerCase(),
-		timeTrackingMethod: command.timeTrackingMethod
+		timeTrackingMethod: command.timeTrackingMethod,
+		requiresRetry
 	}
 
 	const gradebookResult = await errors.try(

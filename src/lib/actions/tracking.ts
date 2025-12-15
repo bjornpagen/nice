@@ -15,7 +15,12 @@ import { getCurrentUserSourcedId } from "@/lib/authorization"
 import * as cacheUtils from "@/lib/cache"
 import { invalidateCache } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
-import { VIDEO_COMPLETION_THRESHOLD_PERCENT, VIDEO_COMPLETION_THRESHOLD_RATIO } from "@/lib/constants/progress"
+import {
+	VIDEO_COMPLETION_THRESHOLD_PERCENT,
+	VIDEO_COMPLETION_THRESHOLD_RATIO,
+	XP_REASON_ALREADY_PROFICIENT
+} from "@/lib/constants/progress"
+import { determineRequiresRetry } from "@/lib/mastery/core"
 import { isSubjectSlug } from "@/lib/constants/subjects"
 import { getAllCoursesBySlug } from "@/lib/oneroster/redis/api"
 import { redis } from "@/lib/redis"
@@ -618,6 +623,7 @@ interface AssessmentCompletionOptions {
 		accuracy: number
 		xp: number
 		multiplier: number
+		requiresRetry?: boolean
 	}
 	contentType?: "Exercise" | "Quiz" | "Test" | "CourseChallenge" // Added CourseChallenge
 	isInteractiveAssessment?: boolean
@@ -763,6 +769,17 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 	// Step 4: Save the assessment result with metadata
 	// Enforce valid 0..100 integer score at the write boundary
 	const finalScore = assertPercentageInteger(assessmentScore, "assessment score")
+
+	// Determine requiresRetry using pure function
+	let requiresRetry = false
+	if (!assessmentMetadata) {
+		const wasAlreadyProficient = xp?.reason === XP_REASON_ALREADY_PROFICIENT
+		requiresRetry = determineRequiresRetry(accuracyPercent, assessmentTotalQuestions, wasAlreadyProficient)
+	} else {
+		// Type-safe access: optional chaining or default to false if undefined
+		requiresRetry = assessmentMetadata.requiresRetry ?? false
+	}
+
 	// Build base metadata either from provided metadata (legacy paths like banked XP)
 	// or from server-side computed values. If server-calculated XP exists, override
 	// the XP-related fields to ensure authoritative values.
@@ -779,7 +796,8 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 				completedAt: new Date().toISOString(),
 				lessonType: contentType?.toLowerCase(),
 				courseSourcedId: courseId,
-				durationInSeconds
+				durationInSeconds,
+				requiresRetry
 			}
 		: {
 				masteredUnits,
@@ -796,7 +814,8 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 				durationInSeconds,
 				// Provide defaults for penalty fields when no XP calc performed
 				penaltyApplied: xp?.penaltyApplied ?? false,
-				xpReason: xp?.reason ?? ""
+				xpReason: xp?.reason ?? "",
+				requiresRetry
 			}
 
 	// If XP was calculated on the server, ensure XP-related fields reflect that

@@ -22,3 +22,6 @@ export const PROFICIENCY_SCORE_FAMILIAR_PENALTY = 70
 
 /** The proficiency score assigned when a student drops from "Familiar" after missing a unit test question. */
 export const PROFICIENCY_SCORE_ATTEMPTED_PENALTY = 50
+
+/** The XP reason string used when a user is blocked from earning XP due to existing proficiency. */
+export const XP_REASON_ALREADY_PROFICIENT = "XP farming prevention: user already proficient"

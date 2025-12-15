@@ -353,7 +353,9 @@ export async function awardBankedXpForExercise(params: {
 				penaltyApplied: false,
 				xpReason: "Banked XP",
 				// Preserve canonical time spent so it is not lost on PUT
-				nice_timeSpent: Math.max(0, timeSpentByResourceId.get(resourceId) ?? 0)
+				nice_timeSpent: Math.max(0, timeSpentByResourceId.get(resourceId) ?? 0),
+				// Banked XP implies mastery was achieved on the triggering exercise
+				requiresRetry: false
 			}
 
             const saveResult = await errors.try(

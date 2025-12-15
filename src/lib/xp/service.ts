@@ -2,8 +2,9 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { checkExistingProficiency } from "@/lib/actions/assessment"
 import { updateStreak } from "@/lib/actions/streak"
+import { XP_REASON_ALREADY_PROFICIENT } from "@/lib/constants/progress"
 // Removed legacy Caliper caches; banking now reads canonical OneRoster results
-import { awardBankedXpForExercise, findEligiblePassiveResourcesForExercise } from "@/lib/xp/bank"
+import { awardBankedXpForExercise } from "@/lib/xp/bank"
 import { calculateAssessmentXp, type XpCalculationResult } from "@/lib/xp/core"
 
 interface AwardXpOptions {
@@ -57,7 +58,7 @@ export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpC
 			baseXp: options.baseXp,
 			accuracy: (options.correctQuestions / options.totalQuestions) * 100,
 			penaltyApplied: false,
-			reason: "XP farming prevention: user already proficient"
+			reason: XP_REASON_ALREADY_PROFICIENT
 		}
 		logger.info("xp award blocked due to existing proficiency", {
 			userSourcedId: options.userSourcedId,

@@ -471,7 +471,8 @@ async function OLD_awardBankedXpForExercise(params: {
 				multiplier: 1.0,
 				completedAt: new Date().toISOString(),
 				courseSourcedId: params.onerosterCourseSourcedId,
-				penaltyApplied: false
+				penaltyApplied: false,
+				requiresRetry: false
 			},
 			correlationId: "test-correlation-id"
 		})
@@ -526,7 +527,8 @@ async function awardBankedXpForUnitCompletion(params: {
 				multiplier: 1.0,
 				completedAt: new Date().toISOString(),
 				courseSourcedId: params.onerosterCourseSourcedId,
-				penaltyApplied: false
+				penaltyApplied: false,
+				requiresRetry: false
 			},
 			correlationId: "test-correlation-id"
 		})

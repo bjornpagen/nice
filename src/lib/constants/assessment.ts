@@ -25,7 +25,9 @@ export const AssessmentResultMetadataSchema = z
 		penaltyApplied: z.boolean(),
 		xpReason: z.string(),
 		// Indicates how time was tracked: "accumulated" (new heartbeat method) or "wall-clock-fallback" (legacy)
-		timeTrackingMethod: z.enum(["accumulated", "wall-clock-fallback"]).optional()
+		timeTrackingMethod: z.enum(["accumulated", "wall-clock-fallback"]).optional(),
+		// Indicates if the user needs to retry to achieve mastery (80%+ accuracy)
+		requiresRetry: z.boolean()
 	})
 	.refine((data) => !(data.penaltyApplied && !data.xpReason), {
 		message: "xpReason must be provided when a penalty is applied."
