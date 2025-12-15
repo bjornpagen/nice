@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
 import {
+	accumulateAssessmentTime,
 	finalizeAssessment,
 	getOrCreateAssessmentState,
 	processQuestionResponse,
@@ -256,6 +257,11 @@ export function AssessmentStepper({
 	const [loadError, setLoadError] = React.useState(false)
 
 	const assessmentStartTimeRef = React.useRef<Date | null>(null)
+
+	// --- Time Tracking Refs (mirrors video pattern) ---
+	const lastAccumulateAtRef = React.useRef<number | null>(null)
+	const isTimeTrackingActiveRef = React.useRef<boolean>(true)
+	const heartbeatIntervalRef = React.useRef<NodeJS.Timeout | null>(null)
 
 	// Guard: ensure summary sfx (sound/confetti) only plays once per attempt
 	const hasAnnouncedSummaryRef = React.useRef(false)
@@ -608,7 +614,99 @@ export function AssessmentStepper({
 		}
 	}, [])
 
-	// Cleanup any pending timers on unmount
+	// --- Time Tracking: Visibility/blur detection (mirrors video pattern) ---
+	React.useEffect(() => {
+		if (!serverState?.attemptNumber) return
+
+		const pauseTimeTracking = () => {
+			// Flush current delta before pausing
+			if (lastAccumulateAtRef.current && isTimeTrackingActiveRef.current) {
+				const delta = (Date.now() - lastAccumulateAtRef.current) / 1000
+				if (delta > 0) {
+					void accumulateAssessmentTime(
+						onerosterResourceSourcedId,
+						delta,
+						serverState.attemptNumber
+					)
+				}
+				lastAccumulateAtRef.current = null
+			}
+			isTimeTrackingActiveRef.current = false
+		}
+
+		const resumeTimeTracking = () => {
+			isTimeTrackingActiveRef.current = true
+			lastAccumulateAtRef.current = Date.now()
+		}
+
+		const handleVisibilityChange = () => {
+			if (document.hidden) {
+				pauseTimeTracking()
+			} else {
+				resumeTimeTracking()
+			}
+		}
+
+		window.addEventListener("blur", pauseTimeTracking)
+		document.addEventListener("visibilitychange", handleVisibilityChange)
+
+		return () => {
+			window.removeEventListener("blur", pauseTimeTracking)
+			document.removeEventListener("visibilitychange", handleVisibilityChange)
+		}
+	}, [onerosterResourceSourcedId, serverState?.attemptNumber])
+
+	// --- Time Tracking: 3-second heartbeat timer (mirrors video pattern) ---
+	React.useEffect(() => {
+		// Don't run if no server state, no attempt number, or already showing summary
+		if (!serverState?.attemptNumber || showSummary) return
+
+		// Initialize time tracking on mount
+		lastAccumulateAtRef.current = Date.now()
+		isTimeTrackingActiveRef.current = true
+
+		const intervalId = setInterval(() => {
+			// Skip if time tracking is paused (tab hidden or window blurred)
+			if (!isTimeTrackingActiveRef.current || !lastAccumulateAtRef.current) return
+
+			const now = Date.now()
+			const deltaSeconds = Math.floor((now - lastAccumulateAtRef.current) / 1000)
+
+			if (deltaSeconds > 0) {
+				void accumulateAssessmentTime(
+					onerosterResourceSourcedId,
+					deltaSeconds,
+					serverState.attemptNumber
+				)
+				lastAccumulateAtRef.current = now
+			}
+		}, 3000)
+
+		heartbeatIntervalRef.current = intervalId
+
+		return () => {
+			if (heartbeatIntervalRef.current) {
+				clearInterval(heartbeatIntervalRef.current)
+				heartbeatIntervalRef.current = null
+			}
+		}
+	}, [onerosterResourceSourcedId, serverState?.attemptNumber, showSummary])
+
+	// --- Time Tracking: Flush final delta on unmount ---
+	React.useEffect(() => {
+		const attemptNumber = serverState?.attemptNumber
+		const resourceId = onerosterResourceSourcedId
+
+		return () => {
+			// Flush final delta on unmount (if assessment was in progress)
+			if (lastAccumulateAtRef.current && attemptNumber && !showSummary) {
+				const delta = (Date.now() - lastAccumulateAtRef.current) / 1000
+				if (delta > 0) {
+					void accumulateAssessmentTime(resourceId, delta, attemptNumber)
+				}
+			}
+		}
+	}, [onerosterResourceSourcedId, serverState?.attemptNumber, showSummary])
 
 	React.useEffect(() => {
 		// When the summary screen is shown, determine the next piece of content.
@@ -903,6 +1001,19 @@ export function AssessmentStepper({
 
 		setIsSubmitting(true)
 		setShowFeedback(false)
+
+		// Sync time on question submit (piggyback on existing server call)
+		if (lastAccumulateAtRef.current && serverState?.attemptNumber) {
+			const delta = (Date.now() - lastAccumulateAtRef.current) / 1000
+			if (delta > 0) {
+				void accumulateAssessmentTime(
+					onerosterResourceSourcedId,
+					delta,
+					serverState.attemptNumber
+				)
+				lastAccumulateAtRef.current = Date.now()
+			}
+		}
 
 		// Determine response format based on the question type
 		const responseIdentifiers = Object.keys(selectedResponses)
