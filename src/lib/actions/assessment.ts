@@ -713,6 +713,84 @@ export async function checkExistingProficiency(onerosterAssessmentSourcedId: str
 	return isProficient
 }
 
+// --- Assessment Time Tracking ---
+
+const ASSESSMENT_MAX_GROWTH_FACTOR_VS_WALLTIME = 1.5
+const ASSESSMENT_TIME_LEEWAY_SECONDS = 5
+
+/**
+ * Accumulates active time for an assessment using incremental heartbeat syncs.
+ *
+ * This mirrors the video time tracking pattern from accumulateCaliperWatchTime:
+ * - Called every 3 seconds while the assessment is active
+ * - Uses a wall-time guard to prevent over-counting (1.5x multiplier with 5s leeway)
+ * - Pauses when tab is hidden or window loses focus
+ *
+ * @param onerosterResourceSourcedId - The OneRoster resource sourcedId for the assessment
+ * @param sessionDeltaSeconds - The time delta claimed by the client since last sync
+ * @param attemptNumber - The current attempt number
+ */
+export async function accumulateAssessmentTime(
+	onerosterResourceSourcedId: string,
+	sessionDeltaSeconds: number,
+	attemptNumber: number
+): Promise<void> {
+	const { userId } = await auth()
+	if (!userId) {
+		logger.debug("assessment time accumulate: user not authenticated, skipping")
+		return
+	}
+
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
+
+	if (sessionDeltaSeconds <= 0 || !Number.isFinite(sessionDeltaSeconds)) {
+		logger.debug("assessment time accumulate: invalid delta, skipping", {
+			sessionDeltaSeconds
+		})
+		return
+	}
+
+	// Lazy import to avoid circular dependency
+	const { getAssessmentTimeState, setAssessmentTimeState } = await import("@/lib/assessment-time-cache")
+
+	const now = new Date()
+	const currentState = (await getAssessmentTimeState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)) ?? {
+		cumulativeActiveSeconds: 0,
+		lastServerSyncAt: null
+	}
+
+	let effectiveDelta = sessionDeltaSeconds
+
+	// Apply wall-time guard: prevent claiming more time than actually elapsed
+	if (currentState.lastServerSyncAt) {
+		const sinceMs = now.getTime() - new Date(currentState.lastServerSyncAt).getTime()
+		const allowed = (sinceMs / 1000) * ASSESSMENT_MAX_GROWTH_FACTOR_VS_WALLTIME
+		const guardAllowed = Math.max(allowed, ASSESSMENT_TIME_LEEWAY_SECONDS)
+
+		if (effectiveDelta > guardAllowed) {
+			logger.warn("assessment time: delta exceeds wall-time guard", {
+				claimed: sessionDeltaSeconds,
+				allowed: guardAllowed,
+				resourceId: onerosterResourceSourcedId
+			})
+			effectiveDelta = Math.max(0, guardAllowed)
+		}
+	}
+
+	const newState = {
+		cumulativeActiveSeconds: currentState.cumulativeActiveSeconds + effectiveDelta,
+		lastServerSyncAt: now.toISOString()
+	}
+
+	await setAssessmentTimeState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber, newState)
+
+	logger.debug("assessment time accumulated", {
+		delta: effectiveDelta,
+		cumulative: newState.cumulativeActiveSeconds,
+		resourceId: onerosterResourceSourcedId
+	})
+}
+
 /**
  * Orchestrates the finalization of an assessment.
  *
@@ -772,8 +850,36 @@ export async function finalizeAssessment(options: {
 			return state.finalSummary
 		}
 
-		// Calculate server-authoritative duration
-		const durationInSeconds = Math.round((Date.now() - new Date(state.startedAt).getTime()) / 1000)
+		// Get duration from accumulated time tracking (preferred) or fall back to wall-clock
+		const { getAssessmentTimeState } = await import("@/lib/assessment-time-cache")
+		const timeState = await getAssessmentTimeState(
+			onerosterUserSourcedId,
+			options.onerosterResourceSourcedId,
+			attemptNumber
+		)
+
+		let durationInSeconds: number
+		let timeTrackingMethod: "accumulated" | "wall-clock-fallback"
+
+		if (timeState && timeState.cumulativeActiveSeconds > 0) {
+			durationInSeconds = Math.round(timeState.cumulativeActiveSeconds)
+			timeTrackingMethod = "accumulated"
+			logger.info("assessment time: using accumulated time", {
+				cumulativeSeconds: durationInSeconds,
+				resourceId: options.onerosterResourceSourcedId,
+				correlationId
+			})
+		} else {
+			// Fallback for legacy assessments without time tracking
+			durationInSeconds = Math.round((Date.now() - new Date(state.startedAt).getTime()) / 1000)
+			timeTrackingMethod = "wall-clock-fallback"
+			logger.warn("assessment time: falling back to wall-clock", {
+				durationSeconds: durationInSeconds,
+				resourceId: options.onerosterResourceSourcedId,
+				reason: "no accumulated time state found",
+				correlationId
+			})
+		}
 
 		// Reconstruct sessionResults from Redis state
 		const questionList = await getDeterministicQuestionList(
@@ -884,7 +990,8 @@ export async function finalizeAssessment(options: {
 			subjectSlug,
 			courseSlug,
 			userPublicMetadata: user.publicMetadata,
-			userEmail
+			userEmail,
+			timeTrackingMethod
 		}
 
 		const saveResult = await errors.try(assessment.saveResult(command))

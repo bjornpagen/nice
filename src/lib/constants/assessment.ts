@@ -23,7 +23,9 @@ export const AssessmentResultMetadataSchema = z
 		courseSourcedId: z.string(),
 		durationInSeconds: z.number().optional(),
 		penaltyApplied: z.boolean(),
-		xpReason: z.string()
+		xpReason: z.string(),
+		// Indicates how time was tracked: "accumulated" (new heartbeat method) or "wall-clock-fallback" (legacy)
+		timeTrackingMethod: z.enum(["accumulated", "wall-clock-fallback"]).optional()
 	})
 	.refine((data) => !(data.penaltyApplied && !data.xpReason), {
 		message: "xpReason must be provided when a penalty is applied."
