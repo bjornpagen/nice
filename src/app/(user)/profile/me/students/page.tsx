@@ -14,8 +14,20 @@ export default async function StudentsPage() {
 
     const studentsPromise: Promise<StudentRow[]> = (async () => {
         const clerk = await clerkClient()
-        const list = await clerk.users.getUserList({ limit: 100 })
-        return list.data
+
+        // Fetch ALL users with pagination (Clerk max is 500 per request)
+        const allUsers: Awaited<ReturnType<typeof clerk.users.getUserList>>["data"] = []
+        let offset = 0
+        const limit = 500
+
+        while (true) {
+            const batch = await clerk.users.getUserList({ limit, offset })
+            allUsers.push(...batch.data)
+            if (batch.data.length < limit) break
+            offset += limit
+        }
+
+        return allUsers
             .map((u) => {
                 const pm = parseUserPublicMetadata(u.publicMetadata)
                 const name = [u.firstName, u.lastName].filter(Boolean).join(" ").trim()
