@@ -26,7 +26,8 @@ export const SaveAssessmentResultCommandSchema = z.object({
 	isInteractiveAssessment: z.boolean(),
 	subjectSlug: z.enum(SUBJECT_SLUGS),
 	courseSlug: z.string(),
-	userPublicMetadata: z.unknown().optional()
+	userPublicMetadata: z.unknown().optional(),
+	timeTrackingMethod: z.enum(["accumulated", "wall-clock-fallback"]).optional()
 })
 
 export type SaveAssessmentResultCommand = z.infer<typeof SaveAssessmentResultCommandSchema>

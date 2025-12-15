@@ -88,7 +88,8 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 		courseSourcedId: courseId,
 		attempt: attemptNumber,
 		durationInSeconds: command.durationInSeconds,
-		lessonType: command.contentType?.toLowerCase()
+		lessonType: command.contentType?.toLowerCase(),
+		timeTrackingMethod: command.timeTrackingMethod
 	}
 
 	const gradebookResult = await errors.try(
