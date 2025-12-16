@@ -161,9 +161,6 @@ function LessonExercise({
 					<div className="flex-1">
 						<span className="text-blue-600 text-xs block mb-1">Up next for you:</span>
 						<h2 className="text-sm font-semibold text-gray-900 mb-1">{exercise.title}</h2>
-						<p className="text-gray-500 text-xs mb-2">
-							Get {exercise.questionsToPass} out of {exercise.totalQuestions} questions to level up!
-						</p>
 					</div>
 					<Button
 						asChild
@@ -182,11 +179,6 @@ function LessonExercise({
 			<div className={`bg-gray-100 rounded-xs ${next ? "border-t-4 border-blue-500" : ""} flex`}>
 				<div className="flex-1 p-2">
 					<h2 className="text-sm font-semibold text-gray-900 mb-1">{exercise.title}</h2>
-					{!isProficient && (
-						<p className="text-gray-500 text-xs mb-2">
-							Get {exercise.questionsToPass} out of {exercise.totalQuestions} questions to level up!
-						</p>
-					)}
 					{progress.score !== undefined && (
 						<p className="text-gray-600 text-xs mb-2">
 							{progress.proficiency && getProficiencyText(progress.proficiency)} • {Math.round(progress.score)}%
@@ -218,9 +210,6 @@ function LessonExercise({
 			<div className="flex justify-between items-start pr-2">
 				<div className="flex-1">
 					<h2 className="text-sm font-semibold text-gray-900 mb-1">{exercise.title}</h2>
-					<p className="text-gray-500 text-xs mb-2">
-						Get {exercise.questionsToPass} out of {exercise.totalQuestions} questions to level up!
-					</p>
 				</div>
 				<Button
 					asChild
