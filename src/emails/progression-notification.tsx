@@ -50,6 +50,10 @@ export function ProgressionNotificationEmail({
         minute: "2-digit",
     })
 
+    // Distinguish between "enrolling in terminal course" vs "completed terminal course"
+    const isTerminalCompletion = isSupplementary && toCourse === "Completed"
+    const completedCount = isTerminalCompletion ? totalCourses : pipelinePosition - 1
+
     return (
         <Html>
             <Head>
@@ -141,7 +145,7 @@ export function ProgressionNotificationEmail({
                     {/* Pipeline Card */}
                     <Section style={pipelineCard}>
                         <Text style={pipelineHeader}>Course Pipeline</Text>
-                        <Text style={pipelineSubheader}>{pipelinePosition} of {totalCourses} courses completed</Text>
+                        <Text style={pipelineSubheader}>{completedCount} of {totalCourses} courses completed</Text>
 
                         {/* Progress bar */}
                         <Section style={progressBarWrapper}>
@@ -150,8 +154,8 @@ export function ProgressionNotificationEmail({
                                     <tr>
                                         {PIPELINE_COURSES.map((_, i) => {
                                             const position = i + 1
-                                            const isCompleted = isSupplementary ? true : position < pipelinePosition
-                                            const isCurrent = isSupplementary ? false : position === pipelinePosition
+                                            const isCompleted = isTerminalCompletion ? true : position < pipelinePosition
+                                            const isCurrent = isTerminalCompletion ? false : position === pipelinePosition
 
                                             return (
                                                 <td
@@ -176,8 +180,8 @@ export function ProgressionNotificationEmail({
                             <tbody>
                                 {PIPELINE_COURSES.map((course, i) => {
                                     const position = i + 1
-                                    const isCompleted = isSupplementary ? true : position < pipelinePosition
-                                    const isCurrent = isSupplementary ? false : position === pipelinePosition
+                                    const isCompleted = isTerminalCompletion ? true : position < pipelinePosition
+                                    const isCurrent = isTerminalCompletion ? false : position === pipelinePosition
 
                                     return (
                                         <tr key={course}>
