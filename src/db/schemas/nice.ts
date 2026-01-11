@@ -337,3 +337,40 @@ const questionRenderReviews = schema.table(
 	]
 )
 export { questionRenderReviews as niceQuestionRenderReviews }
+
+// --- Notification Tables ---
+
+const notificationSubscribers = schema.table(
+	"notification_subscribers",
+	{
+		id: uuid("id").primaryKey().defaultRandom(),
+		email: text("email").notNull(),
+		eventType: text("event_type").notNull(), // e.g., "course.progression"
+		active: integer("active").notNull().default(1), // 1 = active, 0 = inactive
+		createdAt: text("created_at").notNull().default(sql`now()`),
+		updatedAt: text("updated_at").notNull().default(sql`now()`)
+	},
+	(table) => [
+		index("notification_subscribers_email_idx").on(table.email),
+		index("notification_subscribers_event_type_idx").on(table.eventType),
+		uniqueIndex("notification_subscribers_email_event_uniq").on(table.email, table.eventType)
+	]
+)
+export { notificationSubscribers as niceNotificationSubscribers }
+
+const sentProgressionNotifications = schema.table(
+	"sent_progression_notifications",
+	{
+		id: uuid("id").primaryKey().defaultRandom(),
+		userId: text("user_id").notNull(),
+		fromCourseId: text("from_course_id").notNull(),
+		toCourseId: text("to_course_id"), // null for terminal completion
+		notificationType: text("notification_type").notNull(), // "enrollment" or "completion"
+		sentAt: text("sent_at").notNull().default(sql`now()`)
+	},
+	(table) => [
+		index("sent_progression_user_idx").on(table.userId),
+		uniqueIndex("sent_progression_dedup_idx").on(table.userId, table.fromCourseId, table.toCourseId, table.notificationType)
+	]
+)
+export { sentProgressionNotifications as niceSentProgressionNotifications }
