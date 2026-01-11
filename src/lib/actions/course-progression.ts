@@ -2,6 +2,7 @@
 
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { and, eq, isNull } from "drizzle-orm"
 import { oneroster } from "@/lib/clients"
 import { SCIENCE_COURSE_SEQUENCE } from "@/lib/constants/course-mapping"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
@@ -9,6 +10,57 @@ import { getActiveEnrollmentsForUser, getClass } from "@/lib/oneroster/redis/api
 import { enrollUserInCoursesByCourseId } from "@/lib/actions/courses"
 import { requireUser } from "@/lib/auth/require-user"
 import { checkExistingProficiency } from "@/lib/actions/assessment"
+import { inngest } from "@/inngest/client"
+import { db } from "@/db"
+import * as schema from "@/db/schemas"
+
+/**
+ * Check if a progression notification was already sent (deduplication)
+ */
+async function wasNotificationSent(
+	userId: string,
+	fromCourseId: string,
+	toCourseId: string | null,
+	notificationType: "enrollment" | "completion"
+): Promise<boolean> {
+	const conditions = [
+		eq(schema.niceSentProgressionNotifications.userId, userId),
+		eq(schema.niceSentProgressionNotifications.fromCourseId, fromCourseId),
+		eq(schema.niceSentProgressionNotifications.notificationType, notificationType)
+	]
+
+	// Handle null toCourseId for terminal completions
+	if (toCourseId === null) {
+		conditions.push(isNull(schema.niceSentProgressionNotifications.toCourseId))
+	} else {
+		conditions.push(eq(schema.niceSentProgressionNotifications.toCourseId, toCourseId))
+	}
+
+	const existing = await db
+		.select({ id: schema.niceSentProgressionNotifications.id })
+		.from(schema.niceSentProgressionNotifications)
+		.where(and(...conditions))
+		.limit(1)
+
+	return existing.length > 0
+}
+
+/**
+ * Record that a notification was sent (for deduplication)
+ */
+async function recordNotificationSent(
+	userId: string,
+	fromCourseId: string,
+	toCourseId: string | null,
+	notificationType: "enrollment" | "completion"
+): Promise<void> {
+	await db.insert(schema.niceSentProgressionNotifications).values({
+		userId,
+		fromCourseId,
+		toCourseId,
+		notificationType
+	})
+}
 
 // NOTE: Types can be exported from "use server" files (they're erased at runtime)
 export type CourseProgressionStatus = {
@@ -138,9 +190,10 @@ export async function checkAndProgressCourses(): Promise<CourseProgressionStatus
 		// Enrollment Condition: mastered current + has next + not already enrolled
 		const shouldEnrollNext = isMastered && hasNextCourse && !alreadyEnrolledInNext
 
-		// Unenrollment Condition: mastered AND (no next course OR next is secured)
+		// Unenrollment Condition: mastered AND (no next course OR next is secured) AND not terminal
 		// Safe guard: We never unenroll unless we are sure the next step is secure
-		const shouldUnenrollCurrent = isMastered && (!hasNextCourse || alreadyEnrolledInNext || shouldEnrollNext)
+		// Terminal courses keep students enrolled even after completion
+		const shouldUnenrollCurrent = isMastered && !currentConfig.terminal && (!hasNextCourse || alreadyEnrolledInNext || shouldEnrollNext)
 
 		// Use config titles directly (zero API calls)
 		const currentCourseTitle = currentConfig.title
@@ -190,6 +243,86 @@ export async function checkAndProgressCourses(): Promise<CourseProgressionStatus
 			})
 
 			enrolledCourseIds.add(nextConfig.courseId)
+
+			// Emit progression event for notification (with deduplication)
+			const alreadySentEnrollment = await wasNotificationSent(
+				user.id,
+				currentConfig.courseId,
+				nextConfig.courseId,
+				"enrollment"
+			)
+			if (!alreadySentEnrollment) {
+				const pipelinePosition = SCIENCE_COURSE_SEQUENCE.findIndex((c) => c.courseId === nextConfig.courseId) + 1
+				await inngest.send({
+					name: "app/course.progression.completed",
+					data: {
+						userId: user.id,
+						userSourceId: sourceId,
+						studentName: user.fullName || user.firstName || "Unknown",
+						studentEmail: user.primaryEmailAddress?.emailAddress || "",
+						fromCourseId: currentConfig.courseId,
+						fromCourseTitle: currentConfig.title,
+						toCourseId: nextConfig.courseId,
+						toCourseTitle: nextConfig.title,
+						isTerminal: !!nextConfig.terminal,
+						pipelinePosition,
+						totalCourses: SCIENCE_COURSE_SEQUENCE.length,
+						timestamp: new Date().toISOString()
+					}
+				})
+				await recordNotificationSent(user.id, currentConfig.courseId, nextConfig.courseId, "enrollment")
+				logger.info("progression notification event sent", {
+					userId: user.id,
+					from: currentConfig.title,
+					to: nextConfig.title
+				})
+			} else {
+				logger.debug("skipping duplicate enrollment notification", {
+					userId: user.id,
+					from: currentConfig.title,
+					to: nextConfig.title
+				})
+			}
+		}
+
+		// Emit completion event for terminal courses (no next course to enroll in)
+		if (isMastered && currentConfig.terminal && !hasNextCourse) {
+			const alreadySentCompletion = await wasNotificationSent(
+				user.id,
+				currentConfig.courseId,
+				null,
+				"completion"
+			)
+			if (!alreadySentCompletion) {
+				const pipelinePosition = SCIENCE_COURSE_SEQUENCE.findIndex((c) => c.courseId === currentConfig.courseId) + 1
+				await inngest.send({
+					name: "app/course.progression.completed",
+					data: {
+						userId: user.id,
+						userSourceId: sourceId,
+						studentName: user.fullName || user.firstName || "Unknown",
+						studentEmail: user.primaryEmailAddress?.emailAddress || "",
+						fromCourseId: currentConfig.courseId,
+						fromCourseTitle: currentConfig.title,
+						toCourseId: null,
+						toCourseTitle: null,
+						isTerminal: true,
+						pipelinePosition,
+						totalCourses: SCIENCE_COURSE_SEQUENCE.length,
+						timestamp: new Date().toISOString()
+					}
+				})
+				await recordNotificationSent(user.id, currentConfig.courseId, null, "completion")
+				logger.info("terminal course completion notification event sent", {
+					userId: user.id,
+					course: currentConfig.title
+				})
+			} else {
+				logger.debug("skipping duplicate terminal completion notification", {
+					userId: user.id,
+					course: currentConfig.title
+				})
+			}
 		}
 
 		// EXECUTE: Unenroll from Current Course
