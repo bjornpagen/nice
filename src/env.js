@@ -45,7 +45,9 @@ export const env = createEnv({
 		LTI_AUDIENCE: z.string().min(1),
 		LTI_ALLOWED_REDIRECT_HOSTS: z.string().min(1),
 		// API key for external-facing endpoints
-		NICE_API_KEY: z.string().min(1)
+		NICE_API_KEY: z.string().min(1),
+		// Resend email API key
+		RESEND_API_KEY: z.string().min(1)
 	},
 
 	/**
@@ -102,7 +104,8 @@ export const env = createEnv({
 		LTI_JWKS_URL: process.env.LTI_JWKS_URL,
 		LTI_AUDIENCE: process.env.LTI_AUDIENCE,
 			LTI_ALLOWED_REDIRECT_HOSTS: process.env.LTI_ALLOWED_REDIRECT_HOSTS,
-			NICE_API_KEY: process.env.NICE_API_KEY
+		NICE_API_KEY: process.env.NICE_API_KEY,
+		RESEND_API_KEY: process.env.RESEND_API_KEY
 	},
 	/**
 	 * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
