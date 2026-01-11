@@ -245,7 +245,8 @@ export const HARDCODED_SCIENCE_COURSE_IDS = [
 export const SCIENCE_COURSE_SEQUENCE: ReadonlyArray<{
 	readonly title: string
 	readonly courseId: string
-	readonly challengeId: string | null // null = terminal course with no progression trigger
+	readonly challengeId: string | null // null = no progression trigger
+	readonly terminal?: boolean // true = don't unenroll on completion
 }> = [
 	{
 		title: "Middle School Biology",
@@ -270,7 +271,8 @@ export const SCIENCE_COURSE_SEQUENCE: ReadonlyArray<{
 	{
 		title: "MS Science Supplementary",
 		courseId: "nice_x27ad39d4b4427987",
-		challengeId: null // No Course Challenge - terminal course
+		challengeId: "nice_x50a297a11abcfe51", // Computer networks exercise
+		terminal: true // Don't unenroll on completion
 	}
 ]
 

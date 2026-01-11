@@ -528,6 +528,23 @@ const events = {
 			rawXml: z.string().min(1),
 			title: z.string().min(1)
 		})
+	},
+	// Course Progression Notifications
+	"app/course.progression.completed": {
+		data: z.object({
+			userId: z.string().min(1),
+			userSourceId: z.string().min(1),
+			studentName: z.string().min(1),
+			studentEmail: z.string().email(),
+			fromCourseId: z.string().min(1),
+			fromCourseTitle: z.string().min(1),
+			toCourseId: z.string().nullable(),
+			toCourseTitle: z.string().nullable(),
+			isTerminal: z.boolean(),
+			pipelinePosition: z.number().int().min(1),
+			totalCourses: z.number().int().min(1),
+			timestamp: z.string().datetime()
+		})
 	}
 } satisfies Record<string, { data: ZodTypeAny }>
 
