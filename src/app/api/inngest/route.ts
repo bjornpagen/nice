@@ -80,6 +80,8 @@ import { generatePlanAndBuildPayload } from "@/inngest/functions/course-builder/
 import { uploadCourseAndEnroll } from "@/inngest/functions/course-builder/upload-and-enroll"
 // Notification functions
 import { sendProgressionNotification } from "@/inngest/functions/send-progression-notification"
+// Course progression functions
+import { handleCourseChallengeCompletion } from "@/inngest/functions/handle-course-challenge-completion"
 
 // Create and export the Inngest HTTP handler
 export const { GET, POST, PUT } = serve({
@@ -169,6 +171,8 @@ export const { GET, POST, PUT } = serve({
 		uploadCourseAndEnroll,
 		courseBuilderWorkflow,
 		// Notification functions
-		sendProgressionNotification
+		sendProgressionNotification,
+		// Course progression functions
+		handleCourseChallengeCompletion
 	]
 })

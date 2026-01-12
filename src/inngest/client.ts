@@ -545,6 +545,19 @@ const events = {
 			totalCourses: z.number().int().min(1),
 			timestamp: z.string().datetime()
 		})
+	},
+	// Course Challenge Completion (triggers server-side progression check)
+	"app/course-challenge.completed": {
+		data: z.object({
+			userId: z.string().min(1),
+			userSourceId: z.string().min(1),
+			userEmail: z.string().email(),
+			userName: z.string().min(1),
+			courseSourcedId: z.string().min(1),
+			resourceSourcedId: z.string().min(1),
+			score: z.number().int().min(0).max(100),
+			timestamp: z.string().datetime()
+		})
 	}
 } satisfies Record<string, { data: ZodTypeAny }>
 

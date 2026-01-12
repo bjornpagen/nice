@@ -25,6 +25,7 @@ import type { SaveAssessmentResultCommand } from "@/lib/dtos/assessment"
 import { applyQtiSelectionAndOrdering } from "@/lib/qti-selection"
 import * as assessment from "@/lib/services/assessment"
 import * as attempt from "@/lib/services/attempt"
+import { inngest } from "@/inngest/client"
 import type { Question, Unit } from "@/lib/types/domain"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 import { findLatestInteractiveAttempt } from "@/lib/utils/assessment-results"
@@ -1048,6 +1049,39 @@ export async function finalizeAssessment(options: {
 			attemptNumber,
 			finalSummary
 		)
+
+		// Emit event for Course Challenge completions to trigger server-side progression
+		if (options.contentType === "CourseChallenge") {
+			const userName = [user.firstName, user.lastName].filter(Boolean).join(" ") || userEmail
+			const sendResult = await errors.try(
+				inngest.send({
+					name: "app/course-challenge.completed",
+					data: {
+						userId: clerkUserId,
+						userSourceId: onerosterUserSourcedId,
+						userEmail,
+						userName,
+						courseSourcedId: options.onerosterCourseSourcedId,
+						resourceSourcedId: options.onerosterResourceSourcedId,
+						score,
+						timestamp: new Date().toISOString()
+					}
+				})
+			)
+			if (sendResult.error) {
+				// Log but don't fail the finalization - progression can still happen via polling
+				logger.error("failed to emit course-challenge.completed event", {
+					error: sendResult.error,
+					correlationId
+				})
+			} else {
+				logger.info("emitted course-challenge.completed event for server-side progression", {
+					courseSourcedId: options.onerosterCourseSourcedId,
+					score,
+					correlationId
+				})
+			}
+		}
 
 		return finalSummary
 	}
