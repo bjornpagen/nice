@@ -108,10 +108,18 @@ export function ProgressionNotificationEmail({
                                             <table cellPadding="0" cellSpacing="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td style={iconBubbleGreen}>
-                                                            <Text style={iconBubbleText}>✓</Text>
+                                                        <td style={{ verticalAlign: "top", width: "32px" }}>
+                                                            <table cellPadding="0" cellSpacing="0" style={{ width: "32px", height: "32px" }}>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style={iconBubbleGreen}>
+                                                                            <Text style={iconBubbleText}>✓</Text>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </td>
-                                                        <td style={{ paddingLeft: "12px" }}>
+                                                        <td style={{ paddingLeft: "12px", verticalAlign: "top" }}>
                                                             <Text style={courseNamePlain}>{fromCourse}</Text>
                                                         </td>
                                                     </tr>
@@ -126,10 +134,18 @@ export function ProgressionNotificationEmail({
                                             <table cellPadding="0" cellSpacing="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td style={iconBubbleBlue}>
-                                                            <Text style={iconBubbleText}>⋯</Text>
+                                                        <td style={{ verticalAlign: "top", width: "32px" }}>
+                                                            <table cellPadding="0" cellSpacing="0" style={{ width: "32px", height: "32px" }}>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style={iconBubbleBlue}>
+                                                                            <Text style={iconBubbleText}>⋯</Text>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </td>
-                                                        <td style={{ paddingLeft: "12px" }}>
+                                                        <td style={{ paddingLeft: "12px", verticalAlign: "top" }}>
                                                             <Text style={courseNamePlain}>{toCourse}</Text>
                                                         </td>
                                                     </tr>
@@ -339,19 +355,25 @@ const blockLabel: React.CSSProperties = {
 const iconBubbleGreen: React.CSSProperties = {
     width: "32px",
     height: "32px",
+    maxWidth: "32px",
+    maxHeight: "32px",
     backgroundColor: "#22c55e",
     borderRadius: "50%",
     textAlign: "center",
     verticalAlign: "middle",
+    fontSize: "0",
 }
 
 const iconBubbleBlue: React.CSSProperties = {
     width: "32px",
     height: "32px",
+    maxWidth: "32px",
+    maxHeight: "32px",
     backgroundColor: "#3b82f6",
     borderRadius: "50%",
     textAlign: "center",
     verticalAlign: "middle",
+    fontSize: "0",
 }
 
 const iconBubbleText: React.CSSProperties = {
@@ -493,28 +515,37 @@ const courseNamePending: React.CSSProperties = {
 const statusBubbleGreen: React.CSSProperties = {
     width: "28px",
     height: "28px",
+    maxWidth: "28px",
+    maxHeight: "28px",
     backgroundColor: "#22c55e",
     borderRadius: "50%",
     textAlign: "center",
     verticalAlign: "middle",
+    fontSize: "0",
 }
 
 const statusBubbleBlue: React.CSSProperties = {
     width: "28px",
     height: "28px",
+    maxWidth: "28px",
+    maxHeight: "28px",
     backgroundColor: "#3b82f6",
     borderRadius: "50%",
     textAlign: "center",
     verticalAlign: "middle",
+    fontSize: "0",
 }
 
 const statusBubbleGray: React.CSSProperties = {
     width: "28px",
     height: "28px",
+    maxWidth: "28px",
+    maxHeight: "28px",
     backgroundColor: "#e4e4e7",
     borderRadius: "50%",
     textAlign: "center",
     verticalAlign: "middle",
+    fontSize: "0",
 }
 
 const statusBubbleIcon: React.CSSProperties = {
