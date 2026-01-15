@@ -40,7 +40,7 @@ import { cn } from "@/lib/utils"
 
 // Shared helper: render XP penalty alert
 function renderPenaltyAlert(penaltyXp: number, contentType: string, xpReason?: string, avgSecondsPerQuestion?: number) {
-	const isDark = contentType === "Exercise" || contentType === "Quiz" || contentType === "Test"
+	const isDark = contentType === "Exercise" || contentType === "Quiz" || contentType === "Test" || contentType === "CourseChallenge"
 	return (
 		<Alert
 			className={cn(
@@ -112,13 +112,13 @@ function SummaryView({
 			>
 				<div className="text-center max-w-2xl z-10">
 					<h2 className={`text-4xl font-bold mb-4 whitespace-nowrap ${titleClass}`}>{title}</h2>
-					{subtitle && (
-						<p
-							className={`text-lg mb-8 whitespace-nowrap ${contentType === "Exercise" || contentType === "Quiz" || contentType === "Test" ? "text-blue-100" : "text-gray-700"}`}
-						>
-							{subtitle}
-						</p>
-					)}
+				{subtitle && (
+					<p
+						className={`text-lg mb-8 whitespace-nowrap ${contentType === "Exercise" || contentType === "Quiz" || contentType === "Test" || contentType === "CourseChallenge" ? "text-blue-100" : "text-gray-700"}`}
+					>
+						{subtitle}
+					</p>
+				)}
 					{typeof penaltyXp === "number" && penaltyXp < 0 && (
 						<div className="mt-6 w-full max-w-xl mx-auto">
 							{renderPenaltyAlert(penaltyXp, contentType, xpReason, avgSecondsPerQuestion)}
@@ -127,7 +127,7 @@ function SummaryView({
 					<div className="mt-8">
 						{typeof correctAnswersCount === "number" && typeof totalQuestions === "number" && (
 							<p
-								className={`text-3xl font-bold ${contentType === "Exercise" || contentType === "Quiz" || contentType === "Test" ? "text-white" : "text-gray-900"}`}
+								className={`text-3xl font-bold ${contentType === "Exercise" || contentType === "Quiz" || contentType === "Test" || contentType === "CourseChallenge" ? "text-white" : "text-gray-900"}`}
 							>
 								{correctAnswersCount}/{totalQuestions} correct
 							</p>

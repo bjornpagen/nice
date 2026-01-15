@@ -21,7 +21,7 @@ export function Content({ testDataPromise, expectedIdentifiersPromisesPromise }:
 			<AssessmentStepper
 				key={`${test.id}:${retakeKey}`}
 				questions={questions}
-				contentType="Test"
+				contentType="CourseChallenge"
 				onerosterComponentResourceSourcedId={test.componentResourceSourcedId} // The componentResource sourcedId that PowerPath uses
 				onerosterResourceSourcedId={test.id} // The test resource sourcedId for OneRoster results
 				onerosterCourseSourcedId={test.onerosterCourseSourcedId} // Pass the onerosterCourseSourcedId
@@ -54,7 +54,7 @@ export function Content({ testDataPromise, expectedIdentifiersPromisesPromise }:
 				expectedXp={test.expectedXp}
 				onStart={() => setHasStarted(true)}
 				bgClass="bg-blue-950"
-				contentType="Test"
+				contentType="CourseChallenge"
 				isLocked={isLocked}
 			>
 				{/* Course Challenge Illustration - Smaller and Shifted Up */}

@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { cn } from "@/lib/utils"
 
-export type AssessmentType = "Exercise" | "Quiz" | "Test"
+export type AssessmentType = "Exercise" | "Quiz" | "Test" | "CourseChallenge"
 
 interface AssessmentBottomNavProps {
 	contentType: AssessmentType
