@@ -1,6 +1,6 @@
 "use client"
 
-import { AlertCircle, CheckCircle, PenTool, RotateCcw, X } from "lucide-react"
+import { CheckCircle, PenTool, RotateCcw, X } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
 import {
@@ -40,10 +40,8 @@ interface AssessmentBottomNavProps {
 	attemptCount?: number
 	maxAttempts?: number
 	nextItem?: { text: string; path: string; type?: string } | null
-	onReportIssue?: () => void
 	nextEnabled?: boolean
 	canSkip?: boolean
-	canReport?: boolean
 }
 
 const renderContinueButton = (
@@ -97,11 +95,9 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 			attemptCount = 0,
 			maxAttempts = 3,
 			nextItem,
-			onReportIssue,
 			nextEnabled = true,
 			isBusy = false,
-			canSkip = true,
-			canReport = true
+			canSkip = true
 		},
 		ref
 	) => {
@@ -121,8 +117,6 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 							isStartScreen={isStartScreen}
 							isComplete={isComplete}
 							isInProgress={isInProgress}
-							onReportIssue={onReportIssue}
-							canReport={canReport}
 						/>
 
 						<CenterSection
@@ -166,15 +160,11 @@ AssessmentBottomNav.displayName = "AssessmentBottomNav"
 function LeftSection({
 	isStartScreen,
 	isComplete,
-	isInProgress,
-	onReportIssue,
-	canReport
+	isInProgress
 }: {
 	isStartScreen?: boolean
 	isComplete?: boolean
 	isInProgress?: boolean
-	onReportIssue?: () => void
-	canReport?: boolean
 }) {
 	const handleDrawClick = () => {
 		// TODO: Implement draw functionality
@@ -200,17 +190,6 @@ function LeftSection({
 					<p className="text-xs">Draw on exercise</p>
 				</HoverCardContent>
 			</HoverCard>
-
-			{canReport && (
-				<Button
-					variant="link"
-					onClick={onReportIssue}
-					className="text-xs text-gray-500 hover:text-blue-600 hover:underline px-0 flex items-center gap-1"
-				>
-					<AlertCircle className="w-3 h-3" />
-					Report an issue
-				</Button>
-			)}
 		</div>
 	)
 }

@@ -260,9 +260,7 @@ export function Content({ questionIds, expectedIdentifiersPromises }: ContentPro
                         maxAttempts={MAX_ATTEMPTS}
                         onSkip={() => setVisibleIndex((prev) => Math.min(prev + 1, questionIds.length - 1))}
                         onReset={() => setVisibleIndex(0)}
-                        onReportIssue={() => { }}
                         canSkip={!isAnswerChecked}
-                        canReport={!isAnswerChecked}
                     />
                 </div>
             </div>

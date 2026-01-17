@@ -35,6 +35,9 @@ export async function getCurrentUserSourcedId(clerkId: string): Promise<string> 
 }
 
 async function getCourseIdForQuestion(questionId: string): Promise<string | null> {
+	// Strip the "nice_" prefix if present - QTI identifiers have the prefix but DB IDs don't
+	const dbQuestionId = questionId.startsWith("nice_") ? questionId.slice(5) : questionId
+
 	const result = await errors.try(
 		db
 			.select({ courseId: schema.niceCourses.id })
@@ -44,7 +47,7 @@ async function getCourseIdForQuestion(questionId: string): Promise<string | null
 			.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
 			.innerJoin(schema.niceUnits, eq(schema.niceLessons.unitId, schema.niceUnits.id))
 			.innerJoin(schema.niceCourses, eq(schema.niceUnits.courseId, schema.niceCourses.id))
-			.where(and(eq(schema.niceQuestions.id, questionId), eq(schema.niceLessonContents.contentType, "Exercise")))
+			.where(and(eq(schema.niceQuestions.id, dbQuestionId), eq(schema.niceLessonContents.contentType, "Exercise")))
 			.limit(1)
 	)
 

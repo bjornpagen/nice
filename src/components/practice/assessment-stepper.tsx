@@ -20,14 +20,11 @@ import { useLessonProgress } from "@/components/practice/lesson-progress-context
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Textarea } from "@/components/ui/textarea"
 import {
 	accumulateAssessmentTime,
 	finalizeAssessment,
 	getOrCreateAssessmentState,
 	processQuestionResponse,
-	reportQuestion,
 	skipQuestion,
 	startNewAssessmentAttempt,
 	submitAnswer
@@ -235,9 +232,6 @@ export function AssessmentStepper({
 	const [isSubmitting, setIsSubmitting] = React.useState(false)
 	const [attemptCount, setAttemptCount] = React.useState(0)
 	const [showSummary, setShowSummary] = React.useState(false)
-
-	const [isReportPopoverOpen, setIsReportPopoverOpen] = React.useState(false)
-	const [reportText, setReportText] = React.useState("")
 
 	// Store summary data from the server's finalization response
 	const [summaryData, setSummaryData] = React.useState<{
@@ -1312,128 +1306,6 @@ export function AssessmentStepper({
 		isNavigatingRef.current = false
 	}
 
-	// OPEN REPORT POPOVER
-	const handleReportIssue = () => {
-		// Only allow report when server and UI indices are in sync and before first check
-		if (!serverState || serverState.currentQuestionIndex !== visibleQuestionIndex || attemptCount > 0) {
-			toast.error("Report is unavailable after checking or when the question has already advanced.")
-			return
-		}
-		setIsReportPopoverOpen(true)
-		setReportText("")
-	}
-
-	/**
-	 * Submits a user's report about a question. This function implements another key piece of business logic:
-	 *
-	 * - It calls the `reportQuestion` server action, which performs two main tasks:
-	 *   1. Flags the question in the external reporting service.
-	 *   2. Atomically updates the assessment state in Redis to mark the question as `isReported: true`
-	 *      and **advances the `currentQuestionIndex`**.
-	 * - The client then syncs its UI to this new server state.
-	 * - **Effect:** The user is intentionally and immediately moved to the next question. This "report and skip"
-	 *   flow removes the problematic question from the user's path and ensures it is excluded from final scoring.
-	 */
-	const handleSubmitReport = async () => {
-		if (!currentQuestion) return
-
-		if (reportText.trim() === "") {
-			toast.error("Please describe the issue.")
-			return
-		}
-
-		const savedReportText = reportText.trim()
-		setIsReportPopoverOpen(false)
-		setReportText("")
-
-		const toastId = toast.loading("Reporting issue...")
-
-		const result = await errors.try(
-			reportQuestion(onerosterResourceSourcedId, currentQuestion.id, visibleQuestionIndex, savedReportText)
-		)
-
-		if (result.error) {
-			toast.error("Failed to report issue. Please try again.", { id: toastId })
-			// Force a re-sync on failure to be safe
-			if (initStateRef.current) void initStateRef.current()
-			return
-		}
-
-		toast.success("Issue reported. Thank you!", { id: toastId })
-
-		// Update the state based on the atomic response from the server
-		if (result.data.state) {
-			setServerState(result.data.state)
-			const nextIndex = result.data.state.currentQuestionIndex
-			// If reporting advanced past the last question, finalize immediately
-			if (nextIndex >= questions.length) {
-				setIsFinalizing(true)
-				beginProgressUpdate(onerosterResourceSourcedId)
-				const resultFinalize = await errors.try(
-					finalizeAssessment({
-						onerosterResourceSourcedId,
-						onerosterComponentResourceSourcedId,
-						onerosterCourseSourcedId,
-						expectedXp,
-						assessmentTitle,
-						assessmentPath,
-						unitData,
-						contentType
-					})
-				)
-				if (resultFinalize.error) {
-					setIsFinalizing(false)
-					endProgressUpdate(onerosterResourceSourcedId)
-					toast.error("Could not save final result. Please retry.")
-					return
-				}
-				const finalSummaryData = resultFinalize.data
-				setSummaryData({
-					score: finalSummaryData.score,
-					correctAnswersCount: finalSummaryData.correctAnswersCount,
-					totalQuestions: finalSummaryData.totalQuestions,
-					xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
-						? {
-							penaltyXp:
-								typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
-									? finalSummaryData.xpPenaltyInfo.penaltyXp
-									: 0,
-							reason:
-								typeof finalSummaryData.xpPenaltyInfo.reason === "string"
-									? finalSummaryData.xpPenaltyInfo.reason
-									: "Unknown penalty reason",
-							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
-						}
-						: undefined
-				})
-				const score = finalSummaryData.score
-				const calculateProficiency = () => {
-					if (score >= 100) return "proficient" as const
-					if (score >= 70) return "familiar" as const
-					return "attempted" as const
-				}
-				const proficiencyLevel = calculateProficiency()
-				setProgressForResource(onerosterResourceSourcedId, { completed: true, score, proficiency: proficiencyLevel })
-				const currentSlug = (assessmentPath || "").split("/").pop()
-				if (currentSlug) {
-					setProgressForResource(currentSlug, { completed: true, score, proficiency: proficiencyLevel })
-				}
-				endProgressUpdate(onerosterResourceSourcedId)
-				setIsFinalizationComplete(true)
-				setIsFinalizing(false)
-				setShowSummary(true)
-				return
-			}
-			setVisibleQuestionIndex(nextIndex)
-
-			// Per-question state reset is handled by the useEffect watching visibleQuestionIndex
-		} else {
-			toast.error("Failed to refresh after report. Reloading...")
-			// Full reload is the safest recovery here
-			router.refresh()
-		}
-	}
-
 	// Determine button text and action
 	const getButtonConfig = () => {
 		const hasExhaustedAttempts = attemptCount >= MAX_ATTEMPTS && !isAnswerCorrect
@@ -1592,58 +1464,10 @@ export function AssessmentStepper({
 				maxAttempts={MAX_ATTEMPTS}
 				onSkip={handleSkip}
 				onReset={handleReset}
-				onReportIssue={handleReportIssue}
 				canSkip={Boolean(
 					serverState && serverState.currentQuestionIndex === visibleQuestionIndex && attemptCount === 0
 				)}
-				canReport={Boolean(
-					serverState && serverState.currentQuestionIndex === visibleQuestionIndex && attemptCount === 0
-				)}
 			/>
-
-			{/* Report Issue Popover */}
-			<Popover open={isReportPopoverOpen} onOpenChange={setIsReportPopoverOpen}>
-				<PopoverTrigger asChild>
-					<div />
-				</PopoverTrigger>
-				<PopoverContent className="w-96 p-6" align="end" side="top" sideOffset={10}>
-					<div className="space-y-4">
-						<div>
-							<h3 className="text-lg font-semibold text-gray-900 mb-2">Report an issue</h3>
-							<p className="text-sm text-gray-600 mb-4">
-								Help us improve by describing the problem with this question.
-							</p>
-						</div>
-						<div>
-							<label htmlFor="report" className="block text-sm font-medium text-gray-700 mb-2">
-								What's wrong with this question?
-							</label>
-							<Textarea
-								id="report"
-								placeholder="Please describe the issue..."
-								value={reportText}
-								onChange={(e) => setReportText(e.target.value)}
-								rows={4}
-								className="w-full"
-							/>
-						</div>
-						<div className="flex justify-end gap-3">
-							<Button
-								variant="outline"
-								onClick={() => {
-									setIsReportPopoverOpen(false)
-									setReportText("")
-								}}
-							>
-								Cancel
-							</Button>
-							<Button onClick={handleSubmitReport} disabled={reportText.trim() === ""}>
-								Submit Report
-							</Button>
-						</div>
-					</div>
-				</PopoverContent>
-			</Popover>
 		</div>
 	)
 }
