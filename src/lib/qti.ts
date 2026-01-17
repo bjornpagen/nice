@@ -51,9 +51,9 @@ const ProcessResponseApiRequestSchema = z.object({
   ]),
 });
 
-// API Request schema for batched multi-input responses (dropdowns, fill-in-the-blank)
+// API Request schema for batched multi-input responses (dropdowns, fill-in-the-blank, multi-select, ordering)
 const ProcessResponsesBatchedApiRequestSchema = z.object({
-  responses: z.record(z.string(), z.string()),
+  responses: z.record(z.string(), z.union([z.string(), z.array(z.string())])),
 });
 
 export type ProcessResponseInput = z.infer<typeof ProcessResponseInputSchema>;
@@ -1265,15 +1265,15 @@ export class Client {
   /**
    * Processes multiple responses for a single assessment item in one batched request.
    * This is required for dependent inputs like dropdowns or multi-part fill-in-the-blanks,
-   * where the QTI API needs all responses together to evaluate correctness.
+   * as well as multi-select and ordering questions where the QTI API needs the batched format.
    *
    * @param {string} identifier - The unique identifier of the assessment item.
-   * @param {Record<string, string>} responses - A map of response identifiers to their string values.
+   * @param {Record<string, string | string[]>} responses - A map of response identifiers to their values (string or array of strings).
    * @returns {Promise<ProcessResponseResult>} The result of the response processing.
    */
   async processResponses(
     identifier: string,
-    responses: Record<string, string>,
+    responses: Record<string, string | string[]>,
   ): Promise<ProcessResponseResult> {
     logger.info("qti client: processing batched responses", {
       identifier,

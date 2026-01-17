@@ -5,7 +5,7 @@ import * as errors from "@superbuilders/errors";
 
 type ProcessResponsesCall = {
   identifier: string;
-  responses: Record<string, string>;
+  responses: Record<string, string | string[]>;
 };
 let lastProcessResponsesCall: ProcessResponsesCall | null = null;
 function getLastCall(): ProcessResponsesCall | null {
@@ -37,16 +37,49 @@ const mockProcessResponse = mock(
 );
 
 const mockProcessResponses = mock(
-  (identifier: string, responses: Record<string, string>) => {
+  (identifier: string, responses: Record<string, string | string[]>) => {
     lastProcessResponsesCall = { identifier, responses };
 
     const keys = Object.keys(responses);
     if (keys.includes("RESPONSE")) {
+      // Check if it's the ordering question (nice_x220c3c0322b3c908)
+      const responseValue = responses["RESPONSE"];
+      if (Array.isArray(responseValue)) {
+        const correctOrder = ["A", "B", "C", "D"];
+        const isCorrect =
+          responseValue.length === correctOrder.length &&
+          responseValue.every((v, i) => v === correctOrder[i]);
+        return Promise.resolve({
+          score: isCorrect ? 1 : 0,
+          feedback: {
+            identifier: isCorrect ? "CORRECT" : "INCORRECT",
+            value: isCorrect ? "CORRECT" : "INCORRECT",
+          },
+        });
+      }
       return Promise.reject(
         errors.new(
           "Filtering failed: Received forbidden identifier 'RESPONSE'",
         ),
       );
+    }
+
+    // Multi-select question (nice_xe41dfedfe59b56fc)
+    if (keys.includes("choice_interaction")) {
+      const responseValue = responses["choice_interaction"];
+      if (Array.isArray(responseValue)) {
+        const correctChoices = ["A", "B", "E"];
+        const isCorrect =
+          responseValue.length === correctChoices.length &&
+          correctChoices.every((c) => responseValue.includes(c));
+        return Promise.resolve({
+          score: isCorrect ? 1 : 0,
+          feedback: {
+            identifier: isCorrect ? "CORRECT" : "INCORRECT",
+            value: isCorrect ? "CORRECT" : "INCORRECT",
+          },
+        });
+      }
     }
 
     if (keys.some((k) => k.startsWith("RESPONSE__dropdown"))) {
@@ -86,6 +119,58 @@ const mockProcessResponses = mock(
 );
 
 const mockGetAssessmentItem = mock((id: string) => {
+  // Multi-select question: "Identify objects with kinetic energy"
+  // Correct answer: ["A", "B", "E"] (cardinality: multiple)
+  if (id === "nice_xe41dfedfe59b56fc") {
+    return Promise.resolve({
+      identifier: "nice_xe41dfedfe59b56fc",
+      title: "Identify objects with kinetic energy",
+      type: "choice",
+      qtiVersion: "3.0",
+      timeDependent: false,
+      adaptive: false,
+      responseDeclarations: [
+        {
+          identifier: "choice_interaction",
+          cardinality: "multiple",
+          baseType: "identifier",
+          correctResponse: { value: ["A", "B", "E"] },
+        },
+      ],
+      outcomeDeclarations: [],
+      metadata: {},
+      rawXml: "<xml />",
+      content: {},
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
+  }
+  // Ordering question: "Apply: wave properties"
+  // Correct answer: ["A", "B", "C", "D"] in order (cardinality: ordered)
+  if (id === "nice_x220c3c0322b3c908") {
+    return Promise.resolve({
+      identifier: "nice_x220c3c0322b3c908",
+      title: "Apply: wave properties",
+      type: "order",
+      qtiVersion: "3.0",
+      timeDependent: false,
+      adaptive: false,
+      responseDeclarations: [
+        {
+          identifier: "RESPONSE",
+          cardinality: "ordered",
+          baseType: "identifier",
+          correctResponse: { value: ["A", "B", "C", "D"] },
+        },
+      ],
+      outcomeDeclarations: [],
+      metadata: {},
+      rawXml: "<xml />",
+      content: {},
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
+  }
   if (id === "nice_x8c9a2007637b937b") {
     return Promise.resolve({
       identifier: "nice_x8c9a2007637b937b",
@@ -266,5 +351,103 @@ describe("QTI response filtering (server-side)", () => {
     expect(getLastCall()?.responses).toEqual({
       numeric_input_1: "8,9",
     });
+  });
+});
+
+/**
+ * Tests for the QTI API payload format fix.
+ *
+ * These tests verify that multi-select and ordering questions send the correct
+ * batched payload format: { responses: { identifier: [...] } }
+ *
+ * Bug context: The QTI API was refactored and stopped accepting the old format
+ * { identifier, response } for array responses. These tests ensure we send the
+ * correct format that matches the working curl calls from the QTI team.
+ *
+ * QTI Items tested:
+ * - nice_xe41dfedfe59b56fc: Multi-select (cardinality: multiple), correct: ["A", "B", "E"]
+ * - nice_x220c3c0322b3c908: Ordering (cardinality: ordered), correct: ["A", "B", "C", "D"]
+ */
+describe("QTI multi-select and ordering payload format", () => {
+  test("multi-select question (nice_xe41dfedfe59b56fc) sends array in batched format", async () => {
+    lastProcessResponsesCall = null;
+
+    // Simulate what the renderer sends for a multi-select question
+    const selectedResponse = ["A", "B", "E"];
+
+    const result = await processQuestionResponse(
+      "nice_xe41dfedfe59b56fc",
+      selectedResponse,
+      "choice_interaction",
+    );
+
+    // Verify the payload format matches: { responses: { choice_interaction: ["A", "B", "E"] } }
+    expect(getLastCall()?.identifier).toBe("nice_xe41dfedfe59b56fc");
+    expect(getLastCall()?.responses).toEqual({
+      choice_interaction: ["A", "B", "E"],
+    });
+    // The array should NOT be joined as a string
+    expect(
+      Array.isArray(getLastCall()?.responses?.["choice_interaction"]),
+    ).toBe(true);
+    expect(result.isCorrect).toBe(true);
+  });
+
+  test("multi-select question returns incorrect for wrong answers", async () => {
+    lastProcessResponsesCall = null;
+
+    // Wrong selection - missing E, has extra C
+    const selectedResponse = ["A", "B", "C"];
+
+    const result = await processQuestionResponse(
+      "nice_xe41dfedfe59b56fc",
+      selectedResponse,
+      "choice_interaction",
+    );
+
+    expect(getLastCall()?.responses).toEqual({
+      choice_interaction: ["A", "B", "C"],
+    });
+    expect(result.isCorrect).toBe(false);
+  });
+
+  test("ordering question (nice_x220c3c0322b3c908) sends array in batched format", async () => {
+    lastProcessResponsesCall = null;
+
+    // Simulate what the renderer sends for an ordering question
+    const selectedResponse = ["A", "B", "C", "D"];
+
+    const result = await processQuestionResponse(
+      "nice_x220c3c0322b3c908",
+      selectedResponse,
+      "RESPONSE",
+    );
+
+    // Verify the payload format matches: { responses: { RESPONSE: ["A", "B", "C", "D"] } }
+    expect(getLastCall()?.identifier).toBe("nice_x220c3c0322b3c908");
+    expect(getLastCall()?.responses).toEqual({
+      RESPONSE: ["A", "B", "C", "D"],
+    });
+    // The array should NOT be joined as a string
+    expect(Array.isArray(getLastCall()?.responses?.["RESPONSE"])).toBe(true);
+    expect(result.isCorrect).toBe(true);
+  });
+
+  test("ordering question returns incorrect for wrong order", async () => {
+    lastProcessResponsesCall = null;
+
+    // Wrong order
+    const selectedResponse = ["D", "C", "B", "A"];
+
+    const result = await processQuestionResponse(
+      "nice_x220c3c0322b3c908",
+      selectedResponse,
+      "RESPONSE",
+    );
+
+    expect(getLastCall()?.responses).toEqual({
+      RESPONSE: ["D", "C", "B", "A"],
+    });
+    expect(result.isCorrect).toBe(false);
   });
 });

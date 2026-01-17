@@ -217,9 +217,9 @@ export async function processQuestionResponse(
     } as const;
   }
 
-  // Single response or array response (multi-select)
+  // Validate response identifier for single and array responses
   if (!allowedIds.has(responseIdentifier)) {
-    logger.error("undeclared response identifier for single response", {
+    logger.error("undeclared response identifier", {
       qtiItemId,
       responseIdentifier,
       allowedIdentifiers: Array.from(allowedIds),
@@ -227,6 +227,36 @@ export async function processQuestionResponse(
     throw errors.new("undeclared response identifier");
   }
 
+  // Handle array responses (multi-select, ordering) using batched format
+  if (Array.isArray(selectedResponse)) {
+    logger.info("processing array response (multi-select/ordering)", {
+      qtiItemId,
+      responseIdentifier,
+      responseCount: selectedResponse.length,
+    });
+
+    const qtiResult = await errors.try(
+      qti.processResponses(qtiItemId, {
+        [responseIdentifier]: selectedResponse.map(String),
+      }),
+    );
+    if (qtiResult.error) {
+      logger.error("qti array response processing failed", {
+        error: qtiResult.error,
+        qtiItemId,
+      });
+      throw errors.wrap(qtiResult.error, "qti array response processing");
+    }
+
+    const isCorrect = qtiResult.data.score > 0;
+    return {
+      isCorrect,
+      score: isCorrect ? 1 : 0,
+      feedback: isCorrect ? "Correct!" : "Not quite right. Try again.",
+    } as const;
+  }
+
+  // Single response (text entry, single choice, etc.)
   const qtiResult = await errors.try(
     qti.processResponse(qtiItemId, {
       responseIdentifier,
@@ -482,9 +512,9 @@ export async function submitAnswer(
       score: qtiResult.data.score,
     });
   } else {
-    // Single response or array response (multi-select)
+    // Validate response identifier for single and array responses
     if (!allowedIds.has(responseIdentifier)) {
-      logger.error("undeclared response identifier for single response", {
+      logger.error("undeclared response identifier", {
         qtiItemId: questionId,
         responseIdentifier,
         allowedIdentifiers: Array.from(allowedIds),
@@ -492,21 +522,46 @@ export async function submitAnswer(
       throw errors.new("undeclared response identifier");
     }
 
-    const qtiResult = await errors.try(
-      qti.processResponse(questionId, {
-        responseIdentifier,
-        value: responseValue,
-      }),
-    );
-    if (qtiResult.error) {
-      logger.error("qti response processing failed", {
-        error: qtiResult.error,
+    // Handle array responses (multi-select, ordering) using batched format
+    if (Array.isArray(responseValue)) {
+      logger.info("processing array response (multi-select/ordering)", {
         qtiItemId: questionId,
+        responseIdentifier,
+        responseCount: responseValue.length,
       });
-      throw errors.wrap(qtiResult.error, "qti response processing");
-    }
 
-    isCorrect = qtiResult.data.score > 0;
+      const qtiResult = await errors.try(
+        qti.processResponses(questionId, {
+          [responseIdentifier]: responseValue.map(String),
+        }),
+      );
+      if (qtiResult.error) {
+        logger.error("qti array response processing failed", {
+          error: qtiResult.error,
+          qtiItemId: questionId,
+        });
+        throw errors.wrap(qtiResult.error, "qti array response processing");
+      }
+
+      isCorrect = qtiResult.data.score > 0;
+    } else {
+      // Single response (text entry, single choice, etc.)
+      const qtiResult = await errors.try(
+        qti.processResponse(questionId, {
+          responseIdentifier,
+          value: responseValue,
+        }),
+      );
+      if (qtiResult.error) {
+        logger.error("qti response processing failed", {
+          error: qtiResult.error,
+          qtiItemId: questionId,
+        });
+        throw errors.wrap(qtiResult.error, "qti response processing");
+      }
+
+      isCorrect = qtiResult.data.score > 0;
+    }
   }
 
   await updateStateAndQuestion(
