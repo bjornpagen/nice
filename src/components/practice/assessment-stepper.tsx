@@ -1125,6 +1125,7 @@ export function AssessmentStepper({
    *       already-recorded score or state on the server.
    */
   const handleCheckAnswer = async () => {
+    if (isSubmitting) return;
     if (Object.keys(selectedResponses).length === 0 || !currentQuestion) {
       return;
     }
