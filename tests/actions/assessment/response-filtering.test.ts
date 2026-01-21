@@ -337,7 +337,7 @@ describe("QTI response filtering (server-side)", () => {
     expect(Object.keys(getLastCall()?.responses ?? {}).length).toBe(4);
   });
 
-  test("handles array values in multi-input by joining them", async () => {
+  test("preserves array values in multi-input for multi-select interactions", async () => {
     lastProcessResponsesCall = null;
     const selectedResponse = { numeric_input_1: ["8", "9"] };
 
@@ -347,9 +347,10 @@ describe("QTI response filtering (server-side)", () => {
       "numeric_input_1",
     );
 
-    expect(result.isCorrect).toBe(false); // "8,9" !== "8"
+    expect(result.isCorrect).toBe(false); // ["8", "9"] !== "8"
+    // Arrays should be preserved, not joined with commas
     expect(getLastCall()?.responses).toEqual({
-      numeric_input_1: "8,9",
+      numeric_input_1: ["8", "9"],
     });
   });
 });

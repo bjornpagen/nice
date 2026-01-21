@@ -177,15 +177,15 @@ export async function processQuestionResponse(
       throw errors.new("no declared response identifiers");
     }
 
-    // Build batched responses map - normalize all values to strings
-    const responsesMap: Record<string, string> = {};
+    // Build batched responses map - preserve array values for multi-select interactions
+    const responsesMap: Record<string, string | string[]> = {};
     for (const [identifier, value] of responseEntries) {
-      // Handle array values by joining (for multi-select within a dropdown, if applicable)
-      // Most dropdown values are single strings, but we handle arrays defensively
-      const normalizedValue = Array.isArray(value)
-        ? value.map(String).join(",")
-        : String(value);
-      responsesMap[identifier] = normalizedValue;
+      if (Array.isArray(value)) {
+        // Preserve arrays for multi-select choice interactions
+        responsesMap[identifier] = value.map(String);
+      } else {
+        responsesMap[identifier] = String(value);
+      }
     }
 
     // Send all responses in a single batched request
@@ -478,15 +478,15 @@ export async function submitAnswer(
       throw errors.new("no declared response identifiers");
     }
 
-    // Build batched responses map - normalize all values to strings
-    const responsesMap: Record<string, string> = {};
+    // Build batched responses map - preserve array values for multi-select interactions
+    const responsesMap: Record<string, string | string[]> = {};
     for (const [identifier, value] of responseEntries) {
-      // Handle array values by joining (for multi-select within a dropdown, if applicable)
-      // Most dropdown values are single strings, but we handle arrays defensively
-      const normalizedValue = Array.isArray(value)
-        ? value.map(String).join(",")
-        : String(value);
-      responsesMap[identifier] = normalizedValue;
+      if (Array.isArray(value)) {
+        // Preserve arrays for multi-select choice interactions
+        responsesMap[identifier] = value.map(String);
+      } else {
+        responsesMap[identifier] = String(value);
+      }
     }
 
     // Send all responses in a single batched request
