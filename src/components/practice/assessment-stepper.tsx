@@ -703,7 +703,9 @@ export function AssessmentStepper({
     };
   }, []);
 
-  // --- Time Tracking: Visibility/blur detection (mirrors video pattern) ---
+  // --- Time Tracking: Visibility/blur/focus detection ---
+  // Pauses tracking when user leaves the app, resumes when they return.
+  // Ignores blur events caused by clicking into QTI question iframes.
   React.useEffect(() => {
     if (!serverState?.attemptNumber) return;
 
@@ -724,6 +726,7 @@ export function AssessmentStepper({
     };
 
     const resumeTimeTracking = () => {
+      if (isTimeTrackingActiveRef.current) return;
       isTimeTrackingActiveRef.current = true;
       lastAccumulateAtRef.current = Date.now();
     };
@@ -736,18 +739,35 @@ export function AssessmentStepper({
       }
     };
 
-    window.addEventListener("blur", pauseTimeTracking);
+    const handleWindowBlur = () => {
+      // Don't pause when focus goes to an iframe (user clicking on QTI questions)
+      // The QTI question renderer uses iframes, and clicking on answer choices
+      // causes the parent window to lose focus to the iframe. This is normal
+      // user interaction with the assessment, not leaving the app.
+      if (document.activeElement?.tagName === "IFRAME") {
+        return;
+      }
+      pauseTimeTracking();
+    };
+
+    const handleWindowFocus = () => {
+      resumeTimeTracking();
+    };
+
+    window.addEventListener("blur", handleWindowBlur);
+    window.addEventListener("focus", handleWindowFocus);
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      window.removeEventListener("blur", pauseTimeTracking);
+      window.removeEventListener("blur", handleWindowBlur);
+      window.removeEventListener("focus", handleWindowFocus);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [onerosterResourceSourcedId, serverState?.attemptNumber]);
 
-  // --- Time Tracking: 3-second heartbeat timer (mirrors video pattern) ---
+  // --- Time Tracking: 3-second heartbeat timer ---
+  // Sends accumulated time to server every 3 seconds while tracking is active.
   React.useEffect(() => {
-    // Don't run if no server state, no attempt number, or already showing summary
     if (!serverState?.attemptNumber || showSummary) return;
 
     // Initialize time tracking on mount
@@ -756,8 +776,9 @@ export function AssessmentStepper({
 
     const intervalId = setInterval(() => {
       // Skip if time tracking is paused (tab hidden or window blurred)
-      if (!isTimeTrackingActiveRef.current || !lastAccumulateAtRef.current)
+      if (!isTimeTrackingActiveRef.current || !lastAccumulateAtRef.current) {
         return;
+      }
 
       const now = Date.now();
       const deltaSeconds = Math.floor(
