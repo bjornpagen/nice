@@ -423,6 +423,269 @@ export async function awardBankedXpForExercise(params: {
 }
 
 /**
+ * Calculates and awards banked XP for a quiz. This mirrors the exercise banking
+ * logic but is triggered on quiz completion instead of exercise mastery.
+ *
+ * Unlike exercises which require 80% mastery, quizzes award banked XP whenever
+ * the student passes (earns positive XP from the quiz).
+ */
+export async function awardBankedXpForQuiz(params: {
+    quizResourceSourcedId: string
+    onerosterUserSourcedId: string
+    onerosterCourseSourcedId: string
+    userEmail: string
+    subjectSlug: string
+    courseSlug: string
+}): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
+    const correlationId = randomUUID()
+    const userId = extractUserSourcedId(params.onerosterUserSourcedId)
+
+    logger.info("processing banked xp for quiz completion", {
+        quizResourceSourcedId: params.quizResourceSourcedId,
+        userId,
+        correlationId
+    })
+
+    // Fetch and validate course metadata to ensure correct subject slug
+    const courseResult = await errors.try(getCourse(params.onerosterCourseSourcedId))
+    if (courseResult.error) {
+        logger.error("failed to fetch course for quiz banking context", {
+            error: courseResult.error,
+            courseSourcedId: params.onerosterCourseSourcedId,
+            correlationId
+        })
+        throw errors.wrap(courseResult.error, "course fetch for quiz banking")
+    }
+
+    const course = courseResult.data
+    if (!course) {
+        logger.error("CRITICAL: course not found for quiz banking", {
+            courseSourcedId: params.onerosterCourseSourcedId,
+            correlationId
+        })
+        throw errors.new("course not found for quiz banking")
+    }
+
+    const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
+    if (!courseMetadataResult.success) {
+        logger.error("CRITICAL: invalid course metadata for quiz banking", {
+            courseSourcedId: params.onerosterCourseSourcedId,
+            error: courseMetadataResult.error,
+            correlationId
+        })
+        throw errors.wrap(courseMetadataResult.error, "course metadata validation for quiz banking")
+    }
+
+    const courseMetadata = courseMetadataResult.data
+
+    if (params.subjectSlug !== courseMetadata.khanSubjectSlug) {
+        logger.error("CRITICAL: subject slug mismatch for quiz banking", {
+            providedSubject: params.subjectSlug,
+            actualSubject: courseMetadata.khanSubjectSlug,
+            courseSourcedId: params.onerosterCourseSourcedId,
+            correlationId
+        })
+        throw errors.new("subject slug mismatch: provided subject does not match course")
+    }
+
+    // Reuse the exercise eligibility finder - it's completely generic and reads
+    // nice_passiveResources from any resource's metadata
+    const eligibleResources = await findEligiblePassiveResourcesForExercise({
+        exerciseResourceSourcedId: params.quizResourceSourcedId,
+        onerosterUserSourcedId: params.onerosterUserSourcedId
+    })
+
+    if (eligibleResources.length === 0) {
+        logger.info("no eligible passive resources for quiz banking", {
+            quizResourceSourcedId: params.quizResourceSourcedId,
+            correlationId
+        })
+        return { bankedXp: 0, awardedResourceIds: [] }
+    }
+
+    // Fetch canonical time spent for each eligible resource
+    const TimeSpentMetadataSchema = z.object({
+        nice_timeSpent: z.number().optional()
+    }).passthrough()
+
+    const timeSpentResults = await Promise.all(
+        eligibleResources.map(async (resource) => {
+            const resultSourcedId = generateResultSourcedId(userId, resource.sourcedId, false)
+            const result = await errors.try(fetcherGetResult(resultSourcedId))
+
+            if (result.error) {
+                logger.debug("no existing assessment result for quiz-banked resource", {
+                    resourceId: resource.sourcedId,
+                    resultId: resultSourcedId,
+                    error: result.error
+                })
+                return { ...resource, timeSpent: 0 }
+            }
+
+            const parsedMeta = TimeSpentMetadataSchema.safeParse(result.data?.metadata)
+            const timeSpent = parsedMeta.success && typeof parsedMeta.data.nice_timeSpent === "number"
+                ? parsedMeta.data.nice_timeSpent
+                : 0
+
+            if (timeSpent === 0) {
+                logger.info("no time spent recorded for quiz-eligible passive resource", {
+                    resourceId: resource.sourcedId,
+                    resultId: resultSourcedId,
+                    hasResult: !!result.data,
+                    hasMetadata: !!result.data?.metadata,
+                    correlationId
+                })
+            }
+
+            return { ...resource, timeSpent }
+        })
+    )
+
+    const timeSpentByResourceId = new Map<string, number>(
+        timeSpentResults.map((r) => [r.sourcedId, r.timeSpent])
+    )
+
+    // Calculate banked XP using canonical time values
+    let totalBankedXp = 0
+    const awardedResourceIds: string[] = []
+    const awardedXpByResourceId = new Map<string, number>()
+
+    for (const { sourcedId, expectedXp, timeSpent, kind } of timeSpentResults) {
+        const minutesSpent = computeBankingMinutes(timeSpent)
+        // Videos and articles receive full expected XP; others follow time-based cap
+        const awardedXp = (kind === "Video" || kind === "Article") ? expectedXp : Math.min(minutesSpent, expectedXp)
+
+        if (awardedXp > 0) {
+            totalBankedXp += awardedXp
+            awardedResourceIds.push(sourcedId)
+            awardedXpByResourceId.set(sourcedId, awardedXp)
+        }
+    }
+
+    logger.info("calculated quiz banked xp", {
+        totalBankedXp,
+        awardedResourceCount: awardedResourceIds.length,
+        quizResourceSourcedId: params.quizResourceSourcedId,
+        correlationId
+    })
+
+    // Fetch resource metadata for saving results and Caliper events
+    const allResourceIds = eligibleResources.map((r) => r.sourcedId)
+    const allResourcesResult = await errors.try(getResourcesByIds(allResourceIds))
+    if (allResourcesResult.error) {
+        logger.error("failed to fetch resource metadata for quiz banking results", {
+            error: allResourcesResult.error,
+            correlationId
+        })
+        throw errors.wrap(allResourcesResult.error, "resource metadata fetch for quiz banking")
+    }
+
+    const resourceMap = new Map<string, Resource>()
+    for (const resource of allResourcesResult.data) {
+        resourceMap.set(resource.sourcedId, resource)
+    }
+
+    // Save banked XP to individual assessmentResults for each awarded resource
+    for (const resourceId of awardedResourceIds) {
+        const resource = resourceMap.get(resourceId)
+        if (resource) {
+            const computedAwardedXp = awardedXpByResourceId.get(resourceId)
+            if (computedAwardedXp === undefined) {
+                logger.error("missing computed awarded xp for quiz-banked resource", { resourceId })
+                throw errors.new("quiz banked xp: missing awarded xp for resource")
+            }
+
+            const resultSourcedId = generateResultSourcedId(userId, resourceId, false)
+            const lineItemId = getAssessmentLineItemId(resourceId)
+            const metadata = {
+                masteredUnits: 0,
+                totalQuestions: 1,
+                correctQuestions: 1,
+                accuracy: 100,
+                xp: computedAwardedXp,
+                multiplier: 1.0,
+                completedAt: new Date().toISOString(),
+                courseSourcedId: params.onerosterCourseSourcedId,
+                penaltyApplied: false,
+                xpReason: "Banked XP",
+                nice_timeSpent: Math.max(0, timeSpentByResourceId.get(resourceId) ?? 0),
+                requiresRetry: false
+            }
+
+            const saveResult = await errors.try(
+                gradebook.saveResult({
+                    resultSourcedId,
+                    lineItemSourcedId: lineItemId,
+                    userSourcedId: userId,
+                    score: 100,
+                    comment: "Banked XP awarded upon quiz completion.",
+                    metadata,
+                    correlationId
+                })
+            )
+
+            if (saveResult.error) {
+                logger.error("failed to save quiz banked xp assessment result", {
+                    resourceId,
+                    error: saveResult.error,
+                    correlationId
+                })
+                // Continue with other resources even if one fails
+            } else {
+                logger.info("saved quiz banked xp assessment result", { resourceId, correlationId })
+
+                if (!resource.metadata) {
+                    logger.error("CRITICAL: resource missing metadata for caliper event", {
+                        resourceId,
+                        correlationId
+                    })
+                    throw errors.new("resource metadata: required for caliper event")
+                }
+
+                const subjectSlug = courseMetadata.khanSubjectSlug
+                if (!isSubjectSlug(subjectSlug)) {
+                    logger.error("CRITICAL: invalid subject slug for quiz banking caliper event", {
+                        resourceId,
+                        subjectSlug,
+                        correlationId
+                    })
+                    throw errors.new("invalid subject slug for quiz banking caliper event")
+                }
+
+                const mappedSubject = CALIPER_SUBJECT_MAPPING[subjectSlug]
+                const actor = {
+                    id: constructActorId(userId),
+                    type: "TimebackUser" as const,
+                    email: params.userEmail
+                }
+                const context = {
+                    id: `${env.NEXT_PUBLIC_APP_DOMAIN}/resources/${resource.sourcedId}`,
+                    type: "TimebackActivityContext" as const,
+                    subject: mappedSubject,
+                    app: { name: "Nice Academy" },
+                    course: {
+                        name: courseMetadata.khanTitle,
+                        id: `${env.TIMEBACK_ONEROSTER_SERVER_URL}/ims/oneroster/rostering/v1p2/courses/${params.onerosterCourseSourcedId}`
+                    },
+                    activity: { name: resource.title, id: resource.sourcedId },
+                    process: false
+                }
+
+                await sendCaliperBankedXpAwardedEvent(actor, context, computedAwardedXp)
+                logger.info("sent quiz banked xp caliper event", {
+                    userId,
+                    resourceId,
+                    awardedXp: computedAwardedXp,
+                    correlationId
+                })
+            }
+        }
+    }
+
+    return { bankedXp: totalBankedXp, awardedResourceIds }
+}
+
+/**
  * Computes a breakdown of banked XP for a quiz without performing any writes.
  * Returns separate totals for videos and articles based on the same eligibility
  * window. Now uses canonical nice_timeSpent from assessment results.

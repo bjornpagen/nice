@@ -4,7 +4,7 @@ import { checkExistingProficiency } from "@/lib/actions/assessment"
 import { updateStreak } from "@/lib/actions/streak"
 import { XP_REASON_ALREADY_PROFICIENT } from "@/lib/constants/progress"
 // Removed legacy Caliper caches; banking now reads canonical OneRoster results
-import { awardBankedXpForExercise } from "@/lib/xp/bank"
+import { awardBankedXpForExercise, awardBankedXpForQuiz } from "@/lib/xp/bank"
 import { calculateAssessmentXp, type XpCalculationResult } from "@/lib/xp/core"
 
 interface AwardXpOptions {
@@ -110,6 +110,39 @@ export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpC
 			assessmentId: options.componentResourceId,
 			bankedXp,
 			awardedCount: xpBankResult.data.awardedResourceIds.length
+		})
+	}
+
+	// 3b. Process XP Bank for quizzes if the user passed (earned positive XP).
+	// Unlike exercises which require 80% mastery, quizzes award banked XP whenever passed.
+	if (!options.isExercise && assessmentXpResult.finalXp > 0) {
+		const quizBankResult = await errors.try(
+			awardBankedXpForQuiz({
+				quizResourceSourcedId: options.assessmentResourceId,
+				onerosterUserSourcedId: options.userSourcedId,
+				onerosterCourseSourcedId: options.courseSourcedId,
+				userEmail: options.userEmail,
+				subjectSlug: options.subjectSlug,
+				courseSlug: options.courseSlug
+			})
+		)
+
+		if (quizBankResult.error) {
+			logger.error("failed to process quiz xp bank", {
+				error: quizBankResult.error,
+				assessmentId: options.componentResourceId,
+				userId: options.userSourcedId
+			})
+			// CRITICAL: Banking failure must halt the process per "No Fallbacks" rule
+			throw errors.wrap(quizBankResult.error, "quiz xp banking")
+		}
+
+		bankedXp += quizBankResult.data.bankedXp
+		finalXp += quizBankResult.data.bankedXp
+		logger.info("awarded quiz banked xp", {
+			assessmentId: options.componentResourceId,
+			bankedXp: quizBankResult.data.bankedXp,
+			awardedCount: quizBankResult.data.awardedResourceIds.length
 		})
 	}
 
